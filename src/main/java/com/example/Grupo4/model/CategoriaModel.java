@@ -1,4 +1,4 @@
 package com.example.Grupo4.model;
 
-public class CategoriasModel {
+public class CategoriaModel {
 }
