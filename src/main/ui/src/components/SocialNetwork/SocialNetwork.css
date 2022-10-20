@@ -1,0 +1,11 @@
+.social-network {
+    margin: 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+.social-network i {
+    align-self: flex-end;
+    color: var(--black);
+    font-size: 22px;
+    margin: 10px;
+}

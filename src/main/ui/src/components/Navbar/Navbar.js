@@ -1,4 +1,5 @@
 import './Navbar.css';
+import SocialNetwork from '../SocialNetwork/SocialNetwork';
 import logo from '../../assets/img/logo.svg';
 
 const Navbar = () => {
@@ -13,7 +14,9 @@ const Navbar = () => {
                     <li><h3>Crear cuenta</h3></li>
                     <li><h3>Iniciar Sesión</h3></li>
                 </ul>
+                <SocialNetwork className="social-network"/>
             </nav>
+            
         </div>
     )
 }
