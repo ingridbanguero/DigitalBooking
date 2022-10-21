@@ -1,4 +1,4 @@
-import './SocialNetwork.css'
+import './SocialNetwork.scss'
 
 const SocialNetwork = () => {
     return(
