@@ -1,0 +1,98 @@
+.search {
+    background-color: var(--black);
+    h1 {
+        font-size: 26px;
+        color: var(--white);
+        text-align: center;
+        padding: 28px 11px 14px 11px;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+
+        div {
+            width: 100%;
+            position: relative;
+        }
+        input, select {
+            margin: 4px 0px;
+            height: 35px;
+            border-radius: 5px;
+            padding-left: 30px;
+            color: var(--black);
+            width: 100%;
+            outline: none;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+
+        select {
+
+        }
+        
+        .location::before {
+            font-family: "Font Awesome 5 Free"; 
+            font-weight: 900; 
+            content: "\f3c5";
+            color: var(--black);
+            position: absolute;
+            top: 11px;
+            font-size: 21px;
+            left: 9px;
+        }
+
+        .calendar::before {
+            font-family: "Font Awesome 5 Free"; 
+            font-weight: 900; 
+            content: "\f783";
+            color: var(--black);
+            position: absolute;
+            top: 11px;
+            font-size: 19px;
+            left: 9px;
+        }
+
+        button {
+            margin: 4px 0px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            height: 40px;
+            font-size: 14px;
+            border-radius: 5px;
+        }
+    }
+
+    @media screen and (min-width: 768px){
+        h1 {
+            padding-bottom: 8px; 
+        }
+        form {
+            flex-direction: row;
+            div {
+                margin: 0px 10px;
+                input, select {
+                    height: 40px;
+                }
+            }
+            button {
+                width: 300px;
+                height: 40px;
+            }
+            .location::before {
+                top: 11px;
+                font-size: 21px;
+                left: 9px;
+            }
+    
+            .calendar::before {
+                color: var(--black);
+                position: absolute;
+                top: 11px;
+                font-size: 19px;
+                left: 9px;
+            }
+        }
+    }
+}
