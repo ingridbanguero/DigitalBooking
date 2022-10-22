@@ -1,17 +1,17 @@
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-import Body from "../../components/Body/Body";
-import "./Home.scss";
+import FormRegister from "../../components/FormRegister/FormRegister";
+import "./Register.scss";
 
-const Home = () => {
+const Register = () => {
     return(
         <>
             <Navbar/>
-            <Body/>
+            <FormRegister/>
             <Footer/>
         </>
             
     )
 }
-export default Home;
+export default Register;
 

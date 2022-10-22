@@ -1,13 +1,13 @@
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-import Body from "../../components/Body/Body";
-import "./Home.scss";
+import FormLogin from "../../components/FormLogin/FormLogin";
+import "./FormLogin.scss";
 
 const Home = () => {
     return(
         <>
             <Navbar/>
-            <Body/>
+            <FormLogin/>
             <Footer/>
         </>
             
