@@ -15,7 +15,7 @@
         padding: 10px;
         width: 100%;
         max-width: 1200px;
-        .location, .calendar {
+        .location, .field-calendar {
             width: 100%;
             position: relative;
         }
@@ -37,7 +37,7 @@
             }
         }
         
-        .location::before {
+        .location::before, .field-calendar::before {
             font-family: "Font Awesome 5 Free"; 
             font-weight: 900; 
             content: "\f3c5";
@@ -46,20 +46,18 @@
             top: 11px;
             font-size: 21px;
             left: 9px;
+            z-index: 1;
         }
 
-        .calendar::before {
-            font-family: "Font Awesome 5 Free"; 
-            font-weight: 900; 
+        .field-calendar::before {
             content: "\f783";
-            color: var(--black);
-            position: absolute;
-            top: 11px;
-            font-size: 19px;
-            left: 9px;
+            left: 6px;
         }
+        
+        
+        
 
-        button {
+        .search-button {
             margin: 4px 0px;
             background-color: var(--primary-color);
             color: var(--white);
@@ -72,7 +70,7 @@
         .select-city {
             position: absolute;
             background-color: var(--white);
-            z-index: 1;
+            z-index: 2;
             width: 100%;
             max-height: 227px;
             overflow-y: auto;
@@ -111,13 +109,13 @@
         }
         form {
             flex-direction: row;
-            div {
+            > div {
                 margin: 0px 10px;
                 input, select {
                     height: 40px;
                 }
             }
-            button {
+            .search-button {
                 width: 300px;
                 height: 40px;
             }

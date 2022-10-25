@@ -1,44 +1,58 @@
 import './Search.scss';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Ciudades from '../../helpers/ciudades.json';
+import Calendar from '../Calendar/Calendar';
 
 const Search = () => {
     const [openCity, setOpenCity] = useState(false);
-    const [cityId, setCityId] = useState("");
+    const [openCalendar, setOpenCalendar] = useState(false);
+    const [cityName, setCityName] = useState("");
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("")
 
-    useEffect(() => {
-        console.log(cityId); // Id ciudad seleccionada
-    })
+    const handleSelectDate = (dateRange) => {
+        setOpenCalendar(false);
+        setStartDate(`${dateRange[0].getDate()} de ${dateRange[0].toLocaleString('default', { month: 'short' })}.`);
+        setEndDate(`${dateRange[1].getDate()} de ${dateRange[1].toLocaleString('default', { month: 'short' })}.`);
+    }
 
     return(
         <div className="search">
             <h1>Busca ofertas en hoteles, casas y mucho más</h1>
-            <form>
+            <form onSubmit={e => e.preventDefault()}>
                 <div className="location">
                     <select onClick={() => setOpenCity(!openCity)}>
+                        { cityName ?  
+                        <option selected disabled>{cityName}</option> :
                         <option selected disabled>¿A dónde vamos?</option>
+                        }
                     </select>
                     {
                         openCity
                         ? 
                         <div className='select-city'>
-                            { Ciudades.map((ciudad, index) => {
+                            { Ciudades.map((item, index) => {
                                 return(
-                                <div className='option-city' key={index} onClick={() => setCityId(ciudad.id)}>
+                                <div className='option-city' key={index} onClick={() => {setCityName(item.city); setOpenCity(false)}}>
                                     <i class="fa-solid fa-location-dot"></i>
-                                    <p>{ciudad.ciudad}</p>
-                                    <p>{ciudad.pais}</p>
+                                    <p>{item.city}</p>
+                                    <p>{item.country}</p>
                                 </div>)
                             })}
                         </div>
                         : <></>
                     }
-                    
                 </div>
-                <div className="calendar">
-                    <input type="text" placeholder="Check-in - Check out"/>
+                <div className='field-calendar'>
+                    <select onClick={() => setOpenCalendar(!openCalendar)}>
+                        { startDate && endDate ?  
+                        <option selected disabled>{startDate} - {endDate}</option> :
+                        <option selected disabled>¿A dónde vamos?</option>
+                        }
+                    </select>
+                    {openCalendar ? <Calendar onSelectDate={handleSelectDate}/> : <></>}
                 </div>
-                <button className="button1">Buscar</button>
+                <button className="button1 search-button">Buscar</button>
             </form>
         </div>
     )
