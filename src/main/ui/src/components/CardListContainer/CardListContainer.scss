@@ -1,5 +1,5 @@
 .card-list-container {
-    max-width: 1250px;
+    max-width: 1350px;
     width: 100%;
     margin: 0 auto;
     background-color: var(--black);
@@ -20,6 +20,14 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
+        }
+    }
+
+    @media screen and (min-width: 1024px){
+        background-color: var(--soft-grey);
+        h2 {
+            color: var(--black);
+            padding-left: 28px;
         }
     }
 }
