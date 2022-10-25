@@ -1,39 +1,27 @@
 import './CardList.scss';
-import data from "../../helpers/alojamientos.json";
 
-
-const CardList = () => { 
-
-  
-
-    return(
-        <cardList>        
-
-            <ul>
-                {
-                    data.map((item, index) => 
-                                            
-                        <div key={index} className="conteiner">
-                            <div className="card">
-                                <div className="card-logo" >
-                                    <img src={item.img} width="100%" />
-                                </div>
-                                <div className="card-content">
-                                    <h4>{item.category}</h4>
-                                    <p>{item.location}</p>
-                                    <h1>{item.title}</h1>  
-                                    <p>{item.description}</p>
-                                    <button>Ver más</button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        
-                    )
-                }
-            </ul> 
-            
-        </cardList>  
+const CardList = (props) => { 
+    return(                  
+        <div className="card-list">
+            <div className="card-image">
+                <img  src={props.details.img} alt="recomendation"/>
+            </div>
+            <div className="card-details">
+                <div>
+                    <div className="card-title">
+                        <p>{props.details.category}<i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></p>
+                        <h3>{props.details.title}</h3>
+                    </div>
+                    <div className="card-rank">
+                        <span>8</span>
+                        <p>Muy bueno</p>
+                    </div>
+                </div>
+                <p className="card-distance"><i class="fa-solid fa-location-dot"></i> A 940 m del centro - <span>MOSTRAR EN EL MAPA</span></p>
+                <p className="card-description">{props.details.description}</p> 
+                <button>Ver más</button>
+            </div>
+        </div>
     )
 }
 
