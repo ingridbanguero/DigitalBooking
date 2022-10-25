@@ -1,5 +1,8 @@
 .search {
     background-color: var(--black);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     h1 {
         font-size: 26px;
         color: var(--white);
@@ -10,8 +13,9 @@
         display: flex;
         flex-direction: column;
         padding: 10px;
-
-        div {
+        width: 100%;
+        max-width: 1200px;
+        .location, .calendar {
             width: 100%;
             position: relative;
         }
@@ -20,16 +24,17 @@
             height: 35px;
             border-radius: 5px;
             padding-left: 30px;
+            font-size: 14px;
+            font-family: 'Quicksand', sans-serif;;
             color: var(--black);
             width: 100%;
             outline: none;
             appearance: none;
             -webkit-appearance: none;
             -moz-appearance: none;
-        }
-
-        select {
-
+            option {
+                display: none;
+            }
         }
         
         .location::before {
@@ -61,6 +66,42 @@
             height: 40px;
             font-size: 14px;
             border-radius: 5px;
+            
+        }
+
+        .select-city {
+            position: absolute;
+            background-color: var(--white);
+            z-index: 1;
+            width: 100%;
+            max-height: 227px;
+            overflow-y: auto;
+        }
+
+        .option-city {
+            padding: 10px 34px;
+            border-bottom: 1px solid var(--primary-color);
+            margin: 0px 10px;
+            position: relative;
+            cursor: pointer;
+            i {
+                position: absolute;
+                top: 16px;
+                font-size: 21px;
+                left: 0px;
+            }
+            p {
+                font-size: 14px;
+                font-weight: 700;
+                color: var(--black);
+                &:last-child {
+                    color: var(--grey);
+                    font-weight: 500;
+                }
+            }
+            &:last-child {
+                border-bottom: none;
+            }
         }
     }
 
@@ -92,6 +133,9 @@
                 top: 11px;
                 font-size: 19px;
                 left: 9px;
+            }
+            .select-city {
+                margin: 0;
             }
         }
     }
