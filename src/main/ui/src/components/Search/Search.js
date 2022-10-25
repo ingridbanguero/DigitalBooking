@@ -47,7 +47,7 @@ const Search = () => {
                     <select onClick={() => setOpenCalendar(!openCalendar)}>
                         { startDate && endDate ?  
                         <option selected disabled>{startDate} - {endDate}</option> :
-                        <option selected disabled>¿A dónde vamos?</option>
+                        <option selected disabled>Check in - Check out</option>
                         }
                     </select>
                     {openCalendar ? <Calendar onSelectDate={handleSelectDate}/> : <></>}
