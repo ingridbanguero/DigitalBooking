@@ -140,6 +140,7 @@
                             position: absolute;
                             right: 0px;
                             top: 5px;
+                            cursor: pointer;
                             &:before, &:after {
                                 background: var(--black);
                                 content: "";
