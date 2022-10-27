@@ -1,0 +1,50 @@
+.formregister {
+    align-items: stretch;
+    padding: 238px;
+
+    h1{
+        color: var(--primary-color);
+        text-align: center;
+    }
+
+    .container{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-top: 30px;
+
+        input{
+            background-color: var(--white);
+            color: var(--black);
+            display: block;
+            width: 450px;
+            padding: 13px;
+            border-radius: 8px;
+            border: solid var(--primary-color) 0.5px;
+            box-shadow: 0px 7px 3px -3px rgba(49,54,63,0.51);
+            margin: 15px;
+            margin-left: 0;
+        }
+        
+        button{
+            background-color: var(--primary-color);
+            color: var(--white);
+            font-weight: 700;
+            display: block;
+            margin: 0 auto;
+            width: 195px; 
+            padding: 13px;
+            font-size: 16px;
+            border-radius: 8px;
+            margin-top: 60px;
+        }
+    
+        label{
+            padding-top: 15px;
+        }
+
+        p{
+            padding-top: 15px;
+        }
+    }
+}
