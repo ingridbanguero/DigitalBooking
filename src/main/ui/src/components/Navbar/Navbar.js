@@ -2,11 +2,23 @@ import React, { useContext } from 'react';
 import './Navbar.scss';
 import SocialNetwork from '../SocialNetwork/SocialNetwork';
 import logo from '../../assets/img/logo.svg';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 
 const Navbar = () => {
     const { user, logout } = useContext(UserContext);
+    const { pathname } = useLocation();
+
+    const menuOptions = () => {
+        switch(pathname){
+            case "/register":
+                return <li><Link to="/login"><h3>Iniciar Sesión</h3></Link></li>;
+            case "/login":
+                return <li><Link to="/register"><h3>Crear cuenta</h3></Link></li>;
+            default:
+                return <><li><Link to="/register"><h3>Crear cuenta</h3></Link></li><li><Link to="/login"><h3>Iniciar Sesión</h3></Link></li></>;
+        }
+    }
 
     const menuLogin = (
         user.auth ? 
@@ -22,8 +34,7 @@ const Navbar = () => {
         </ul> : 
         <ul className='menu-logout'>
             <li><h2>MENÚ</h2></li>
-            <li><Link to="/register"><h3>Crear cuenta</h3></Link></li>
-            <li><Link to="/login"><h3>Iniciar Sesión</h3></Link></li>
+            {menuOptions()}         
         </ul>
     )
     return(
