@@ -22,7 +22,7 @@ const FormLogin = () => {
         } else{
             alert("Por favor vuelva a intentarlo, sus credenciales son inválidas")
         }
-               
+
     }      
 
     return(
@@ -40,36 +40,20 @@ const FormLogin = () => {
                         })}/>   
 
                     <ErrorMessage errors={errors} name="email" render={({ message }) => <p className="error-message">{message}</p>}>
-                        {({ messages }) => {
-                        console.log(messages);
-                        return (
-                            messages &&
-                            Object.entries(messages).map(([type, message]) => (
-                            <p key={type}>{message}</p>
-                            ))
-                        );
-                        }}
+                        
                     </ErrorMessage>
 
                     <label>Contraseña</label>   
                     <input type="password" name="password" {...register("password", { 
                         required: "Este campo es requerido.", 
-                        pattern: {
-                            minLength: 7,
+                        minLength: {
+                            value: 7,
                             message: "La contraseña debe tener más de 6 caracteres"
                         }
                         })}/>   
 
-                    <ErrorMessage errors={errors} name="password" render={({ message }) => <p className="error-message">{message}</p>}>
-                        {({ messages }) => {
-                        console.log(messages);
-                        return (
-                            messages &&
-                            Object.entries(messages).map(([type, message]) => (
-                            <p key={type}>{message}</p>
-                            ))
-                        );
-                        }}
+                    <ErrorMessage errors={errors} name="password" render={({ message }) => <p className="error-message">{message}</p>}>                    
+                     
                     </ErrorMessage> 
 
                     <button type="submit">Ingresar</button>   

@@ -60,7 +60,11 @@
                 margin-top: 48px;
                 cursor: pointer;
             }
-
+            .error-message {
+                color: red;
+                align-self: flex-end;
+                margin-top: 5px;
+            }
             p{
                 margin-top: 7px;
                 font-size: 12px;
