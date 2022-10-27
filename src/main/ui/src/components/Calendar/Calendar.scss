@@ -41,9 +41,8 @@
     
         .react-datepicker__month-container {
             padding: 0px 15px;
-            &:first-child {
-                border-right: 1px solid var(--grey);
-            }
+            position: relative;
+            
         }
     
         .react-datepicker__day--keyboard-selected,
@@ -83,15 +82,41 @@
             cursor: pointer;
             transform: translate(-50%, 0px);
             left: 50%;
+            width: 70%;
         } 
     }
     @media screen and (min-width: 768px){
         width: auto;
         right: 0;
+        .react-datepicker {
+            .react-datepicker__month-container {
+                &::after {
+                    content: "";
+                    display: inline-block;
+                    height: 92%;
+                    width: 1px;
+                    left: 0;
+                    top: 4%;
+                    background-color: var(--soft-grey);
+                    position: absolute;
+                }
+            }
+            .button-calendar {
+                width: 90%;
+            }
+        }
     }
 
     @media screen and (min-width: 1024px){
         left: 0;
         right: auto;
+        .react-datepicker {
+            .button-calendar {
+                width: 30%;
+                bottom: 5px;
+                transform: none;
+                left: 62%
+            }
+        }
     }
 }
