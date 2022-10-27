@@ -17,29 +17,24 @@ const FormRegister = () => {
         <div onSubmit={handleSubmit(onSubmit)} className='formRegister'> 
             <div className="container">
              <h1>Crear Cuenta</h1>  
-                <form>
+                <form noValidate>
                     <div>
                         <div>
                             <label>Nombre</label>   
-                            <input type="text" name="name" autocomplete="off"{...register("name", { 
+                            <input type="text" name="name" autoComplete="off"{...register("name", { 
                             required: "Este campo es requerido."
                             })}/>
-                            <ErrorMessage errors={errors} name="name" render={({ message }) => <p className="error-message">{message}</p>}>
-                               
-                            </ErrorMessage>
-                            
+                            <ErrorMessage errors={errors} name="name" render={({ message }) => <p className="error-message">{message}</p>}/>
                         </div>
                         <div>
                             <label>Apellido</label>   
-                            <input type="text" name="lastName" required autocomplete="off" {...register("lastName", { 
+                            <input type="text" name="lastName" required formNoValidate autoComplete="off" {...register("lastName", { 
                         required: "Este campo es requerido."})}/>   
-                            <ErrorMessage errors={errors} name="lastName" render={({ message }) => <p className="error-message">{message}</p>}>
-                          
-                            </ErrorMessage>
+                            <ErrorMessage errors={errors} name="lastName" render={({ message }) => <p className="error-message">{message}</p>}/>
                         </div>
                     </div>
                     <label>Correo electrónico</label>   
-                    <input type="email" name="email" required autocomplete="off"{...register("email", { 
+                    <input type="email" name="email" required autoComplete="off"{...register("email", { 
                         required: "Este campo es requerido.", 
                         pattern: {
                             value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
@@ -47,12 +42,10 @@ const FormRegister = () => {
                         }
                         })}/>   
 
-                    <ErrorMessage errors={errors} name="email" render={({ message }) => <p className="error-message">{message}</p>}>
-                 
-                    </ErrorMessage> 
+                    <ErrorMessage errors={errors} name="email" render={({ message }) => <p className="error-message">{message}</p>}/>
                     
                     <label>Contraseña</label> 
-                    <input type="password" name="password" required autocomplete="off"{...register("password", { 
+                    <input type="password" name="password" required autoComplete="off"{...register("password", { 
                         required: "Este campo es requerido.", 
                         minLength: {
                             value: 7,
@@ -61,12 +54,10 @@ const FormRegister = () => {
                         })}
                         />   
 
-                    <ErrorMessage errors={errors} name="password" render={({ message }) => <p className="error-message">{message}</p>}>
-                    
-                    </ErrorMessage>  
+                    <ErrorMessage errors={errors} name="password" render={({ message }) => <p className="error-message">{message}</p>}/>
 
                     <label>Confirmar contraseña</label>   
-                    <input type="password" name="password" required autocomplete="off"{...register("password", { 
+                    <input type="password" name="password" required autoComplete="off"{...register("password", { 
                         required: "Este campo es requerido.", 
                         minLength: {
                             value: 7,
@@ -75,9 +66,7 @@ const FormRegister = () => {
                         })}
                     />   
 
-                    <ErrorMessage errors={errors} name="password" render={({ message }) => <p className="error-message">{message}</p>}>
-                
-                    </ErrorMessage>   
+                    <ErrorMessage errors={errors} name="password" render={({ message }) => <p className="error-message">{message}</p>}/> 
 
                     <button type="submit">Crear cuenta</button>   
                     <p>¿Ya tienes cuenta? <Link to="/login"><span>Iniciar sesión</span></Link></p>
