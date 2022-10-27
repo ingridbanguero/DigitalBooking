@@ -2,7 +2,8 @@
     height: calc(100vh - 55px);
     padding-top: 82px;
     position: relative;
-
+    min-height: 705px;
+    background-color: #F9F9F9;
     .container{
         position: absolute;
         transform: translate(-50%, -50%);
@@ -63,9 +64,22 @@
         }
     }
 
+    @media screen and (min-width: 768px){
+        padding-top: 82px;
+        height: calc(100vh - 98px);
+    }
+
     @media screen and (min-width: 1024px){
         .container{ 
             max-width: 448px;
+            form {
+                button {
+                    max-width: 206px;
+                }
+                p {
+                    margin-top: 18px;
+                }
+            }
         }
     }
 }

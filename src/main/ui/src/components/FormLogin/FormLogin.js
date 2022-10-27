@@ -1,5 +1,5 @@
-import './FormLogin.scss';
 import { Link } from "react-router-dom";
+import './FormLogin.scss';
 
 const FormLogin = () => { 
     return(
