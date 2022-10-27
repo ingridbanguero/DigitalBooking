@@ -1,29 +1,29 @@
 import { Link } from "react-router-dom";
+import React, { useContext } from 'react';
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
+import { UserContext } from "../../context/UserContext";
 import './FormLogin.scss';
 
 const FormLogin = () => { 
+    const { login } = useContext(UserContext);
 
     const usuario = {
         "email" : "grupo4@gmail.com",
         "password" : "Grupo4DH"
     }
    
-
-    //const {register, handleSubmit } = useForm();
     const { register, formState: { errors }, handleSubmit } = useForm();
 
     const onSubmit = evento => {
         console.log(evento) 
         if(evento.email === usuario.email && evento.password === usuario.password){
-            console.log("Usar context ")
-        }else{
+            login("");
+        } else{
             alert("Por favor vuelva a intentarlo, sus credenciales son inválidas")
         }
                
     }      
-
 
     return(
         <div onSubmit={handleSubmit(onSubmit)} className='formlogin'> 
@@ -39,7 +39,7 @@ const FormLogin = () => {
                         }
                         })}/>   
 
-                    <ErrorMessage errors={errors} name="email">
+                    <ErrorMessage errors={errors} name="email" render={({ message }) => <p className="error-message">{message}</p>}>
                         {({ messages }) => {
                         console.log(messages);
                         return (
@@ -60,7 +60,7 @@ const FormLogin = () => {
                         }
                         })}/>   
 
-                    <ErrorMessage errors={errors} name="password">
+                    <ErrorMessage errors={errors} name="password" render={({ message }) => <p className="error-message">{message}</p>}>
                         {({ messages }) => {
                         console.log(messages);
                         return (
