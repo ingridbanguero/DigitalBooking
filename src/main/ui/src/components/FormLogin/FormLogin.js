@@ -1,18 +1,21 @@
 import './FormLogin.scss';
+import { Link } from "react-router-dom";
 
 const FormLogin = () => { 
     return(
-        <form className='formlogin'> 
-            <h1>Iniciar Sesión</h1>  
-            <div className="container">  
-                <label>Correo electrónico</label>   
-                <input type="email" placeholder="Ingresa tu correo electrónico" name="email" required/>  
-                <label>Contraseña</label>   
-                <input type="password" placeholder="Ingresa tu contraseña" name="password" required/> 
-                <button type="submit">Ingresar</button>   
-                <p>¿Aún no tienes cuenta? <a href='/register'>Registrate aquí</a></p>    
-            </div>   
-        </form> 
+        <div className='formlogin'> 
+            <div className='container'>
+                <h1>Iniciar Sesión</h1>  
+                <form>
+                    <label>Correo electrónico</label>   
+                    <input type="email" name="email" required/>  
+                    <label>Contraseña</label>   
+                    <input type="password" name="password" required/> 
+                    <button type="submit">Ingresar</button>   
+                    <p>¿Aún no tienes cuenta? <Link to="/register"><span>Registrate aquí</span></Link></p>     
+                </form>
+            </div>
+        </div>
     )
 }
 
