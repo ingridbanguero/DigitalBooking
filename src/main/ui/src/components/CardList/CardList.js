@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import './CardList.scss';
 
 const CardList = (props) => { 
@@ -19,7 +20,8 @@ const CardList = (props) => {
                 </div>
                 <p className="card-distance"><i class="fa-solid fa-location-dot"></i> A 940 m del centro - <span>MOSTRAR EN EL MAPA</span></p>
                 <p className="card-description">{props.details.description}</p> 
-                <button>Ver más</button>
+                <Link to={`/product/${props.details.id}`}><button>Ver más</button></Link>
+                
             </div>
         </div>
     )
