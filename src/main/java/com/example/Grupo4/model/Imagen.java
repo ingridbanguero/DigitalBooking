@@ -16,12 +16,10 @@ public class Imagen {
 
   @Id
   @GeneratedValue(strategy =  GenerationType.SEQUENCE)
-  private Integer id;
+  private Integer imagen_id;
 
   private String titulo; 
 
-  private String imagenUrl;
-
-  
+  private String imagenUrl; 
     
 }
