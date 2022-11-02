@@ -16,10 +16,14 @@ public class Imagen {
 
   @Id
   @GeneratedValue(strategy =  GenerationType.SEQUENCE)
-  private Integer imagen_id;
+  private Integer id;
 
   private String titulo; 
 
   private String imagenUrl; 
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = “producto_id”)
+  private Producto producto;
     
 }
