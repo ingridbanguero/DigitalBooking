@@ -1,7 +1,8 @@
 package com.example.Grupo4.model;
 
-import java.util.ArrayList;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.List;
 import javax.persistence.*;
 import lombok.*;
 
@@ -16,13 +17,9 @@ public class Ciudad {
 
   @Id
   @GeneratedValue(strategy =  GenerationType.SEQUENCE)
-  private Integer ciudad_id;
+  private Integer id;
 
   private String nombre; 
 
-  private String pais;   
-
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = “producto_id”)
-  private ArrayList<Producto> productos;
+  private String pais;
 }

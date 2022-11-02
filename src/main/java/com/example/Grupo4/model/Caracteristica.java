@@ -25,7 +25,4 @@ public class Caracteristica {
   private String nombre;
 
   private String icono;
-
-  @ManyToMany(mappedBy = "caracteristicas")
-  private List<Producto> productos;
 }

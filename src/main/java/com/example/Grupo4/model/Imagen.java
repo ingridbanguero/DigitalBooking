@@ -20,10 +20,6 @@ public class Imagen {
 
   private String titulo; 
 
-  private String imagenUrl; 
-
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = “producto_id”)
-  private Producto producto;
+  private String url;
     
 }

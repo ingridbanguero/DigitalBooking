@@ -1,7 +1,10 @@
 package com.example.Grupo4.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -28,23 +31,23 @@ public class Producto {
 
   private String nombre;
 
+  @Column(columnDefinition = "LONGTEXT")
   private String descripcion;
 
-  @OneToMany(mappedBy = "producto", fetch = FetchType.LAZY)
+  @OneToMany(cascade = CascadeType.ALL)
+  @JoinColumn(name = "producto_id")
   private List<Imagen> imagenes;
 
-  @ManyToMany
-  @JoinTable(
-      name = "producto",
-      joinColumns = @JoinColumn(name = "producto_id"),
-      inverseJoinColumns = @JoinColumn(name = "caracteristica_id"))
+  @ManyToMany(cascade = CascadeType.PERSIST)
+  @JoinColumn(name = "caracteristica_id")
   private List<Caracteristica> caracteristicas;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "categoria_id")
+  @JsonIgnoreProperties("productos")
   private Categoria categoria;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "ciudad_id")
   private Ciudad ciudad;
 }
