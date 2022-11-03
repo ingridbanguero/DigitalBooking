@@ -1,8 +1,12 @@
 .product-location {
     background-color: var(--soft-grey);
-    display: flex;
     padding: 14px 10px;
-    justify-content: space-between;
+    .product-content {
+        display: flex;
+        justify-content: space-between;
+        max-width: 1300px;
+        margin: 0 auto;
+    }
     .location {
         width: 60%;
         color: var(--black);
