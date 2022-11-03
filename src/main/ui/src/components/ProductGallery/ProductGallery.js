@@ -4,7 +4,9 @@ import "./ProductGallery.scss";
 const ProductGallery = () => {
     return(
         <div className="product-gallery">
-            <p>Componente galeria - Ingrid</p>
+            <div className="product-content">
+                <p>Componente galeria - Ingrid</p>
+            </div>
         </div> 
     )
 }
