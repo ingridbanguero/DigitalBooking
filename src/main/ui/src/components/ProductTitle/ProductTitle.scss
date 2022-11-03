@@ -2,10 +2,15 @@
     padding-top: 82px;
     background-color: var(--black);
     color: var(--white);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding: 94px 10px 8px 10px;
+    .product-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1300px;
+        margin: 0 auto;
+    }
+    
     > div {
         h4 {
             font-size: 14px;

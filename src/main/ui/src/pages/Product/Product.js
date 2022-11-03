@@ -10,6 +10,7 @@ import ProductFeatures from "../../components/ProductFeatures/ProductFeatures";
 import ProductReservation from "../../components/ProductReservation/ProductReservation";
 import ProductMap from "../../components/ProductMap/ProductMap";
 import ProductPolicies from "../../components/ProductPolicies/ProductPolicies";
+import Footer from "../../components/Footer/Footer"
 
 const Product = () => {
     const { id } = useParams();
@@ -26,6 +27,7 @@ const Product = () => {
             <ProductReservation/>
             <ProductMap/>
             <ProductPolicies/>
+            <Footer/>
         </section> 
     )
 }
