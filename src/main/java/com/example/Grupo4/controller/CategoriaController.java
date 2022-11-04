@@ -45,11 +45,11 @@ public class CategoriaController {
   }
 
   @PutMapping
-  public ResponseEntity<Categoria> modificar(@RequestBody Categoria odontologo){
-    if (service.consultarCategoria(odontologo.getId()).isEmpty()){
+  public ResponseEntity<Categoria> modificar(@RequestBody Categoria categoria){
+    if (service.consultarCategoria(categoria.getId()).isEmpty()){
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     } else{
-      return ResponseEntity.ok(service.modificarCategoria(odontologo));
+      return ResponseEntity.ok(service.modificarCategoria(categoria));
     }
   }
 

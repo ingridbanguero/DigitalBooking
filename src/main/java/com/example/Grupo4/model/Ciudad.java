@@ -16,7 +16,7 @@ import lombok.*;
 public class Ciudad {
 
   @Id
-  @GeneratedValue(strategy =  GenerationType.SEQUENCE)
+  @GeneratedValue(strategy =  GenerationType.IDENTITY)
   private Integer id;
 
   private String nombre; 

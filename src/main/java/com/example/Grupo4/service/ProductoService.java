@@ -1,5 +1,6 @@
 package com.example.Grupo4.service;
 
+import com.example.Grupo4.model.Categoria;
 import com.example.Grupo4.model.Producto;
 import com.example.Grupo4.repository.IProductoRepository;
 import java.util.Collection;
@@ -25,6 +26,10 @@ public class ProductoService {
 
   public Collection<Producto> consultarTodosLosProductos(){
     return repository.findAll();
+  }
+
+  public Producto modificarProducto(Producto p){
+    return repository.save(p);
   }
 
 }
