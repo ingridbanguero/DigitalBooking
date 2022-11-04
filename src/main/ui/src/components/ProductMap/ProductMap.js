@@ -5,7 +5,7 @@ const ProductMap = () => {
     return(
         <div className="product-map">
             <div className="product-content">
-                <p>Componente map - Gloria</p>
+                <p></p>
             </div>
         </div> 
     )
