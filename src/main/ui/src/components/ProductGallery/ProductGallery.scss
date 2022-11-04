@@ -91,6 +91,16 @@
             width: 650px;
             height: 550px;
             opacity: 1;
+            i {
+                color: var(--white);
+                position: absolute;
+                top: 2px;
+                z-index: 10;
+                right: 6px;
+                cursor: pointer;
+                font-size: 18px;
+
+            }
             .mySwiper2 {
                 img {
                     width: 100%;

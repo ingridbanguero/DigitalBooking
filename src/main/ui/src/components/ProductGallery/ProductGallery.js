@@ -78,6 +78,7 @@ const ProductGallery = () => {
                 {
                     modal ? <div class="gallery-modal">
                     <div>
+                        <i onClick={() => { setModal(false)}} class="fa-solid fa-xmark"></i>
                     <Swiper
                         style={{
                         "--swiper-navigation-color": "#fff",
