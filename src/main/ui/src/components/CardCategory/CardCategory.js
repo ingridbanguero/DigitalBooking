@@ -1,12 +1,13 @@
 import './CardCategory.scss';
 
 const CardCategory = (props) => { 
+
     return(
         <div className='card-category'>
-            <img src={props.details.Imagen} alt="category"/>
+            <img src={props.details.imagenUrl} alt="category"/>
             <div>
-                <h3>{props.details.Categoria}</h3>
-                <h4>807.105 {props.details.Categoria}</h4>
+                <h3>{props.details.titulo}</h3>
+                <h4>{props.details.descripcion}</h4>
             </div>
         </div>
     )

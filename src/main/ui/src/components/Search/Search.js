@@ -1,6 +1,6 @@
 import './Search.scss';
-import React, { useState } from 'react';
-import Ciudades from '../../helpers/ciudades.json';
+import React, { useState, useEffect } from 'react';
+// import Ciudades from '../../helpers/ciudades.json';
 import Calendar from '../Calendar/Calendar';
 
 const Search = () => {
@@ -8,13 +8,28 @@ const Search = () => {
     const [openCalendar, setOpenCalendar] = useState(false);
     const [cityName, setCityName] = useState("");
     const [startDate, setStartDate] = useState("");
-    const [endDate, setEndDate] = useState("")
+    const [endDate, setEndDate] = useState("");
+    const [ciudades, setCiudades] = useState([]);
 
     const handleSelectDate = (dateRange) => {
         setOpenCalendar(false);
         setStartDate(`${dateRange[0].getDate()} de ${dateRange[0].toLocaleString('default', { month: 'short' })}.`);
         setEndDate(`${dateRange[1].getDate()} de ${dateRange[1].toLocaleString('default', { month: 'short' })}.`);
     }
+
+    // Traer ciudades
+    useEffect(
+        () => {
+            try{
+                fetch('http://localhost:8080/ciudades')
+                .then(response => response.json())
+                .then(data => setCiudades(data))
+            }catch(e){
+                console.log(e);
+            }
+        }, []
+    )
+    
 
     return(
         <div className="search">
@@ -31,12 +46,12 @@ const Search = () => {
                         openCity
                         ? 
                         <div className='select-city'>
-                            { Ciudades.map((item, index) => {
+                            { ciudades.map((ciudad, index) => {
                                 return(
-                                <div className='option-city' key={index} onClick={() => {setCityName(item.city); setOpenCity(false)}}>
+                                <div className='option-city' key={index} onClick={() => {setCityName(ciudad.nombre); setOpenCity(false)}}>
                                     <i class="fa-solid fa-location-dot"></i>
-                                    <p>{item.city}</p>
-                                    <p>{item.country}</p>
+                                    <p>{ciudad.nombre}</p>
+                                    <p>{ciudad.pais}</p>
                                 </div>)
                             })}
                         </div>
