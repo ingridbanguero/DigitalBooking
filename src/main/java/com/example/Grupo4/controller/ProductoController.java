@@ -1,6 +1,5 @@
 package com.example.Grupo4.controller;
 
-import com.example.Grupo4.model.Categoria;
 import com.example.Grupo4.model.Producto;
 import com.example.Grupo4.service.ProductoService;
 import java.util.Collection;
