@@ -1,6 +1,7 @@
 import "./Product.scss";
 
 import { useParams } from "react-router";
+
 import Navbar from "../../components/Navbar/Navbar";
 import ProductTitle from "../../components/ProductTitle/ProductTitle";
 import ProductLocation from "../../components/ProductLocation/ProductLocation";
@@ -11,24 +12,29 @@ import ProductReservation from "../../components/ProductReservation/ProductReser
 import ProductMap from "../../components/ProductMap/ProductMap";
 import ProductPolicies from "../../components/ProductPolicies/ProductPolicies";
 import Footer from "../../components/Footer/Footer"
+import Body from "../../components/Body/Body";
 
 const Product = () => {
     const { id } = useParams();
     console.log(id);
     
     return(
+        
         <section className="product">
             <Navbar/>
-            <ProductTitle/>
-            <ProductLocation/>
-            <ProductGallery/>
-            <ProductDescription/>
-            <ProductFeatures/>
-            <ProductReservation/>
-            <ProductMap/>
-            <ProductPolicies/>
+            <Body>
+                <ProductTitle/>
+                <ProductLocation/>
+                <ProductGallery/>
+                <ProductDescription/>
+                <ProductFeatures/>
+                <ProductReservation/>
+                <ProductMap/>
+                <ProductPolicies/>
+            </Body>
             <Footer/>
         </section> 
+        
     )
 }
 

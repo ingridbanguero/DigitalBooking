@@ -12,6 +12,7 @@ import com.example.Grupo4.service.CiudadService;
 
 @RestController
 @RequestMapping("/ciudades")
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
 public class CiudadController {
 
     private final CiudadService ciudadService;

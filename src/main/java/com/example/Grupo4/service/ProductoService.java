@@ -1,6 +1,7 @@
 package com.example.Grupo4.service;
 
 import com.example.Grupo4.model.Ciudad;
+import com.example.Grupo4.model.Categoria;
 import com.example.Grupo4.model.Producto;
 import com.example.Grupo4.repository.IProductoRepository;
 
@@ -42,5 +43,9 @@ public class ProductoService {
     return productosFiltrados;
   }
 
+
+  public Producto modificarProducto(Producto p){
+    return repository.save(p);
+  }
 
 }

@@ -19,7 +19,7 @@ import lombok.Setter;
 public class Caracteristica {
 
   @Id
-  @GeneratedValue(strategy =  GenerationType.SEQUENCE)
+  @GeneratedValue(strategy =  GenerationType.IDENTITY)
   private Integer id;
 
   private String nombre;

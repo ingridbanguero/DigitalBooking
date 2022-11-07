@@ -1,4 +1,5 @@
 import "./ProductTitle.scss";
+import {Link} from 'react-router-dom';
 
 const ProductTitle = () => {
     
@@ -9,7 +10,7 @@ const ProductTitle = () => {
                     <h4>HOTEL</h4>
                     <h1>Hermitage Hotel</h1>
                 </div>
-                <i class="fa-solid fa-chevron-left"></i>
+                <Link to="/"><i class="fa-solid fa-chevron-left"></i></Link>
             </div>
         </div> 
     )

@@ -15,7 +15,7 @@ import lombok.*;
 public class Imagen {
 
   @Id
-  @GeneratedValue(strategy =  GenerationType.SEQUENCE)
+  @GeneratedValue(strategy =  GenerationType.IDENTITY)
   private Integer id;
 
   private String titulo; 
