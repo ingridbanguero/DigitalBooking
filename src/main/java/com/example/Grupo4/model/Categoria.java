@@ -1,6 +1,5 @@
 package com.example.Grupo4.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,6 +31,5 @@ public class Categoria {
   private String imagenUrl;
 
   @OneToMany(mappedBy = "categoria")
-  @JsonIgnore
   private List<Producto> productos;
 }
