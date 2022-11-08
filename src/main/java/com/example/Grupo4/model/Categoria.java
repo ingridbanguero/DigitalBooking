@@ -1,7 +1,6 @@
 package com.example.Grupo4.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +15,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name="categorias")
+@Table(name = "categorias")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -25,7 +24,7 @@ import lombok.ToString;
 public class Categoria {
 
   @Id
-  @GeneratedValue(strategy =  GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
   private String titulo;

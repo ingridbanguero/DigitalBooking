@@ -17,15 +17,15 @@ public class ProductoService {
     this.repository = productoRepository;    
   }
 
-  public Producto crearProducto(Producto c){
+  public Producto crearProducto(Producto c) {
     return repository.save(c);
   }
 
-  public Optional<Producto> consultarProducto(Integer id){
+  public Optional<Producto> consultarProducto(Integer id) {
     return repository.findById(id);
   }
 
-  public Collection<Producto> consultarTodosLosProductos(){
+  public Collection<Producto> consultarTodosLosProductos() {
     return repository.findAll();
   }
 
