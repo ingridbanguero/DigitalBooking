@@ -1,13 +1,18 @@
 package com.example.Grupo4.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import java.util.List;
-import javax.persistence.*;
-import lombok.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
-@Table(name="ciudades")
+@Table(name = "ciudades")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -16,10 +21,10 @@ import lombok.*;
 public class Ciudad {
 
   @Id
-  @GeneratedValue(strategy =  GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  private String nombre; 
+  private String nombre;
 
   private String pais;
 }
