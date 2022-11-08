@@ -1,6 +1,5 @@
 package com.example.Grupo4.controller;
 
-import com.example.Grupo4.model.Ciudad;
 import com.example.Grupo4.model.Producto;
 import com.example.Grupo4.service.ProductoService;
 import java.util.Collection;
@@ -39,9 +38,9 @@ public class ProductoController {
     }
   }
 
-  @GetMapping("/{ciudad}")
-  public ResponseEntity<Collection<Producto>> filtrarPorCiudad(@PathVariable Ciudad ciudad){    
-    return ResponseEntity.ok(service.filtrarProductosPorCiudad(ciudad));   
+  @GetMapping("/ciudad")
+  public ResponseEntity<Collection<Producto>> filtrarPorCiudad(@RequestParam Integer id){    
+    return ResponseEntity.ok(service.filtrarProductosPorCiudad(id));   
   }
 
   @PutMapping

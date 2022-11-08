@@ -1,7 +1,5 @@
 package com.example.Grupo4.service;
 
-import com.example.Grupo4.model.Ciudad;
-import com.example.Grupo4.model.Categoria;
 import com.example.Grupo4.model.Producto;
 import com.example.Grupo4.repository.IProductoRepository;
 
@@ -31,12 +29,12 @@ public class ProductoService {
     return repository.findAll();
   }
 
-  public Collection<Producto> filtrarProductosPorCiudad(Ciudad ciudad){
+  public Collection<Producto> filtrarProductosPorCiudad(Integer id){
     Collection<Producto> allProducts = repository.findAll();
     Collection<Producto> productosFiltrados = new ArrayList<>();
 
     for (Producto producto : allProducts){
-      if(producto.getCiudad().equals(ciudad)){
+      if(producto.getId().equals(id)){
         productosFiltrados.add(producto);
       };
     }    
