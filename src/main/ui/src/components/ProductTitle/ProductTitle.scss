@@ -2,7 +2,7 @@
     padding-top: 82px;
     background-color: var(--black);
     color: var(--white);
-    padding: 94px 10px 8px 10px;
+    padding: 10px 10px 8px 10px;
     .product-content {
         display: flex;
         justify-content: space-between;
@@ -26,10 +26,10 @@
     
 
     @media screen and (min-width: 768px){
-        padding: 120px 30px 6px 30px;
+        padding: 20px 30px 6px 30px;
     }
     @media screen and (min-width: 1024px){
-        padding: 112px 30px 6px 30px;
+        padding: 14px 30px 6px 30px;
         i {
             font-size: 30px;
         }

@@ -3,10 +3,11 @@ import React, { useState, useEffect } from 'react';
 // import Ciudades from '../../helpers/ciudades.json';
 import Calendar from '../Calendar/Calendar';
 
-const Search = () => {
+const Search = (props) => {
     const [openCity, setOpenCity] = useState(false);
     const [openCalendar, setOpenCalendar] = useState(false);
     const [cityName, setCityName] = useState("");
+    const [cityId, setCityId] = useState(0);
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [ciudades, setCiudades] = useState([]);
@@ -48,7 +49,7 @@ const Search = () => {
                         <div className='select-city'>
                             { ciudades.map((ciudad, index) => {
                                 return(
-                                <div className='option-city' key={index} onClick={() => {setCityName(ciudad.nombre); setOpenCity(false)}}>
+                                <div className='option-city' key={index} onClick={() => {setCityName(ciudad.nombre); setOpenCity(false); setCityId(ciudad.id)}}>
                                     <i class="fa-solid fa-location-dot"></i>
                                     <p>{ciudad.nombre}</p>
                                     <p>{ciudad.pais}</p>
@@ -67,7 +68,7 @@ const Search = () => {
                     </select>
                     {openCalendar ? <Calendar onSelectDate={handleSelectDate}/> : <></>}
                 </div>
-                <button className="button1 search-button">Buscar</button>
+                <button onClick={() => props.onSelectCity(cityId)} className="button1 search-button">Buscar</button>
             </form>
         </div>
     )

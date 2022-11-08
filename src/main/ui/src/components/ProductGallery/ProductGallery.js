@@ -53,7 +53,7 @@ const ProductGallery = () => {
                     slidesPerView={1}
                     className="mySwiper"
                 >
-                    {imagenes.map((image, index) => <SwiperSlide><img src={image} alt="slide-images"/></SwiperSlide>)}
+                    {imagenes.map((image, index) => <SwiperSlide key={index}><img src={image} alt="slide-images"/></SwiperSlide>)}
                 </Swiper>
                 </div>
             </div> 
@@ -94,7 +94,7 @@ const ProductGallery = () => {
                         modules={[FreeMode, Pagination, Navigation, Thumbs]}
                         className="mySwiper2"
                     >
-                        {imagenes.map((image, index) => <SwiperSlide><img src={image} alt="slide-images"/></SwiperSlide>)}
+                        {imagenes.map((image, index) => <SwiperSlide key={index}><img src={image} alt="slide-images"/></SwiperSlide>)}
                     </Swiper>
                     <Swiper
                         // onSwiper={(swiper) => setThumbsSwiper(swiper)}
@@ -105,7 +105,7 @@ const ProductGallery = () => {
                         modules={[FreeMode, Navigation, Thumbs]}
                         className="mySwiper"
                     >
-                        {imagenes.map((image, index) => <SwiperSlide><img src={image} alt="slide-images"/></SwiperSlide>)}
+                        {imagenes.map((image, index) => <SwiperSlide key={index}><img src={image} alt="slide-images"/></SwiperSlide>)}
                         
                     </Swiper>
                     </div>
