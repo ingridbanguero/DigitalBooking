@@ -1,17 +1,17 @@
 import { Link } from "react-router-dom";
 import './CardList.scss';
 
-const CardList = (props) => { 
+const CardList = ({details}) => { 
     return(                  
         <div className="card-list">
             <div className="card-image">
-                <img  src={props.details.img} alt="recomendation"/>
+                <img  src={details.imagenes[0].url} alt={details.imagenes[0].titulo}/>
             </div>
             <div className="card-details">
                 <div>
                     <div className="card-title">
-                        <p>{props.details.category}<i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></p>
-                        <h3>{props.details.title}</h3>
+                        <p>{details.categoria.titulo}<i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></p>
+                        <h3>{details.nombre}</h3>
                     </div>
                     <div className="card-rank">
                         <span>8</span>
@@ -19,9 +19,8 @@ const CardList = (props) => {
                     </div>
                 </div>
                 <p className="card-distance"><i class="fa-solid fa-location-dot"></i> A 940 m del centro - <span>MOSTRAR EN EL MAPA</span></p>
-                <p className="card-description">{props.details.description}</p> 
-                <Link to={`/product/${props.details.id}`}><button>Ver más</button></Link>
-                
+                <p className="card-description">{details.descripcion}</p> 
+                <Link to={`/product/${details.id}`}><button>Ver más</button></Link>
             </div>
         </div>
     )

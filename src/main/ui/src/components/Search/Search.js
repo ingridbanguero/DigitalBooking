@@ -18,7 +18,6 @@ const Search = (props) => {
         setEndDate(`${dateRange[1].getDate()} de ${dateRange[1].toLocaleString('default', { month: 'short' })}.`);
     }
 
-    console.log(baseUrl);
     // Traer ciudades
     useEffect(
         () => {

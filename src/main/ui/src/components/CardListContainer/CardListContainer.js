@@ -1,16 +1,17 @@
 import './CardListContainer.scss';
 import React, { useState, useEffect, useContext } from 'react';
+import baseUrl from "../../helpers/api";
 import CardList from '../CardList/CardList';
-import Alojamientos from "../../helpers/alojamientos.json";
+// import Alojamientos from "../../helpers/alojamientos.json";
 import { UserContext } from "../../context/UserContext";
 
 
 const CardListContainer = (props) => { 
-    const [product, setProduct] = useState([]);
+    const [products, setProducts] = useState([]);
     const { user } = useContext(UserContext);
     
     const filterProduct = () => {
-        let productFilter = product;
+        let productFilter = products;
         // Organizar aleatoriamente productos si el usuario no esta log
         if(!user.auth){
             productFilter = productFilter.sort(() => Math.random() - 0.5);
@@ -22,7 +23,7 @@ const CardListContainer = (props) => {
             productFilter = productFilter.filter(product => product.categoria.id === props.filterCategory);
         }
         return (
-            productFilter.map((item, index) => <CardList details={item} key={index}/>)
+            productFilter.map((product, index) => <CardList details={product} key={index}/>)
         )
     }
 
@@ -30,10 +31,9 @@ const CardListContainer = (props) => {
     useEffect(
         () => {
             try{
-                fetch('http://localhost:8080/productos')
+                fetch(`${baseUrl}/productos`)
                 .then(response => response.json())
-                .then(data => console.log(data))
-                setProduct(Alojamientos);
+                .then(data => setProducts(data))
             } catch(e){
                 console.log(e);
             }
@@ -43,10 +43,11 @@ const CardListContainer = (props) => {
     return(
         <div className="card-list-container">
             <h2>Recomendaciones</h2>
+            {products ? 
             <div>
             { filterProduct()}
             </div>
-            
+            : <></>}
         </div>
     )
 }
