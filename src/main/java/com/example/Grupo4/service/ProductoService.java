@@ -34,7 +34,7 @@ public class ProductoService {
     Collection<Producto> productosFiltrados = new ArrayList<>();
 
     for (Producto producto : allProducts){
-      if(producto.getId().equals(id)){
+      if(producto.getCiudad().getId().equals(id)){
         productosFiltrados.add(producto);
       };
     }    
