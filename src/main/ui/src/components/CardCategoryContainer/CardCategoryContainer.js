@@ -1,6 +1,7 @@
 import './CardCategoryContainer.scss';
 import { useEffect, useState } from 'react';
-import CardCategory from "../CardCategory/CardCategory"
+import CardCategory from "../CardCategory/CardCategory";
+import baseUrl from '../../helpers/api';
 // import Categorias from "../../helpers/categorias.json";
 
 const CardCategoryContainer = (props) => { 
@@ -10,7 +11,7 @@ const CardCategoryContainer = (props) => {
     useEffect(
         () => {
             try{
-                fetch('http://localhost:8080/categorias')
+                fetch(`${baseUrl}/categorias`)
                 .then(response => response.json())
                 .then(data => setCategorias(data))
             }catch(e){

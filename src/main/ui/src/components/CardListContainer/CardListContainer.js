@@ -1,14 +1,20 @@
 import './CardListContainer.scss';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import CardList from '../CardList/CardList';
 import Alojamientos from "../../helpers/alojamientos.json";
+import { UserContext } from "../../context/UserContext";
+
 
 const CardListContainer = (props) => { 
     const [product, setProduct] = useState([]);
+    const { user } = useContext(UserContext);
     
     const filterProduct = () => {
-        // Todos los productos
         let productFilter = product;
+        // Organizar aleatoriamente productos si el usuario no esta log
+        if(!user.auth){
+            productFilter = productFilter.sort(() => Math.random() - 0.5);
+        }
         if(props.filterCity > 0){
             productFilter = productFilter.filter(product => product.ciudad.id === props.filterCity);
         }
@@ -28,7 +34,7 @@ const CardListContainer = (props) => {
                 .then(response => response.json())
                 .then(data => console.log(data))
                 setProduct(Alojamientos);
-            }catch(e){
+            } catch(e){
                 console.log(e);
             }
         }, []

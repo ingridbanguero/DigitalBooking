@@ -1,7 +1,7 @@
 import './Search.scss';
 import React, { useState, useEffect } from 'react';
-// import Ciudades from '../../helpers/ciudades.json';
 import Calendar from '../Calendar/Calendar';
+import baseUrl from '../../helpers/api';
 
 const Search = (props) => {
     const [openCity, setOpenCity] = useState(false);
@@ -18,11 +18,12 @@ const Search = (props) => {
         setEndDate(`${dateRange[1].getDate()} de ${dateRange[1].toLocaleString('default', { month: 'short' })}.`);
     }
 
+    console.log(baseUrl);
     // Traer ciudades
     useEffect(
         () => {
             try{
-                fetch('http://localhost:8080/ciudades')
+                fetch(`${baseUrl}/ciudades`)
                 .then(response => response.json())
                 .then(data => setCiudades(data))
             }catch(e){
