@@ -1,7 +1,7 @@
 import "./ProductLocation.scss";
 
 
-const ProductLocation = () => {
+const ProductLocation = ({ciudad}) => {
     
     return(
         <div className="product-location">
@@ -9,13 +9,11 @@ const ProductLocation = () => {
                 <div className="location">
                     <i class="fa-solid fa-location-dot"></i>
                     <div>
-                        <p>Buenos Aires, Ciudad Autónoma de Buenos Aires, Argentina</p>
+                        <p>{ciudad.nombre}, {ciudad.pais}</p>
                         <p>A 940m del centro</p>
                     </div>
                 </div>
-                <div className="ranking">
-
-                </div>
+                <div className="ranking"></div>
             </div>
         </div> 
     )

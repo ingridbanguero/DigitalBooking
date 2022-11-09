@@ -1,7 +1,7 @@
 import "./Product.scss";
-
+import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router";
-
+import baseUrl from "../../helpers/api";
 import Navbar from "../../components/Navbar/Navbar";
 import ProductTitle from "../../components/ProductTitle/ProductTitle";
 import ProductLocation from "../../components/ProductLocation/ProductLocation";
@@ -15,26 +15,45 @@ import Footer from "../../components/Footer/Footer"
 import Body from "../../components/Body/Body";
 
 const Product = () => {
-    const { id } = useParams();
-    console.log(id);
+    console.log("Holi")
+    let { id } = useParams();
+    const [product, setProduct] = useState(null);
     
+    // Traer producto por id
+    useEffect(
+        () => {
+            console.log(id);
+            try{
+                fetch(`${baseUrl}/productos/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    setProduct(data);
+                    console.log(data)
+
+                })
+            }catch(e){
+                console.log(e);
+            }
+        }, [id]
+    )
+
     return(
-        
         <section className="product">
             <Navbar/>
-            <Body>
-                <ProductTitle/>
-                <ProductLocation/>
-                <ProductGallery/>
-                <ProductDescription/>
-                <ProductFeatures/>
-                <ProductReservation/>
-                <ProductMap/>
-                <ProductPolicies/>
-            </Body>
+                {product ? 
+                <Body>
+                    <ProductTitle nombre={product.nombre} categoria={product.categoria}/>
+                    <ProductLocation ciudad={product.ciudad} />
+                    <ProductGallery imagenes={product.imagenes}/>
+                    <ProductDescription descripcion={product.descripcion} ciudad={product.ciudad}/>
+                    <ProductFeatures caracteristicas={product.caracteristicas}/>
+                    <ProductReservation/>
+                    <ProductMap/>
+                    <ProductPolicies/>
+                </Body> : <></>
+                }
             <Footer/>
         </section> 
-        
     )
 }
 
