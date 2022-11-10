@@ -26,6 +26,8 @@ const Calendar = (props) => {
 
     return(
         <div className='calendar'>
+            <div className="pantalla">
+            </div>
             <DatePicker
                 selectsRange={true}
                 startDate={startDate}
