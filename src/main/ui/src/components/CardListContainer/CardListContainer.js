@@ -2,50 +2,74 @@ import './CardListContainer.scss';
 import React, { useState, useEffect, useContext } from 'react';
 import baseUrl from "../../helpers/api";
 import CardList from '../CardList/CardList';
-// import Alojamientos from "../../helpers/alojamientos.json";
 import { UserContext } from "../../context/UserContext";
 
 
 const CardListContainer = (props) => { 
     const [products, setProducts] = useState([]);
+    const [filterProducts, setFilterProducts] = useState([]);
     const { user } = useContext(UserContext);
-    
-    const filterProduct = () => {
-        let productFilter = products;
-        // Organizar aleatoriamente productos si el usuario no esta log
-        if(!user.auth){
-            productFilter = productFilter.sort(() => Math.random() - 0.5);
-        }
-        if(props.filterCity > 0){
-            productFilter = productFilter.filter(product => product.ciudad.id === props.filterCity);
-        }
-        if(props.filterCategory > 0){
-            productFilter = productFilter.filter(product => product.categoria.id === props.filterCategory);
-        }
-        return (
-            productFilter.map((product, index) => <CardList details={product} key={index}/>)
-        )
-    }
 
-    // Traer productos
+
+    // Traer todos los productos 
     useEffect(
         () => {
             try{
                 fetch(`${baseUrl}/productos`)
                 .then(response => response.json())
-                .then(data => setProducts(data))
+                .then(data => {
+                    if(!user.auth){
+                        data = data.sort(() => Math.random() - 0.5); // Aleatorio
+                    }
+                    setProducts(data);
+                    setFilterProducts(data);
+                })
             } catch(e){
                 console.log(e);
             }
-        }, []
+        }, [user.auth]
+    )
+
+    useEffect(
+        () => {
+            const filterCategory = (filterProd) => {
+                let filter = filterProd.filter(product => product.categoria.id === props.filterCategory)
+                setFilterProducts(filter);
+            }
+
+            const filterCity = () => {
+                try{
+                    fetch(`${baseUrl}/productos/ciudad?&id=${props.filterCity}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if(props.filterCategory > 0){
+                            filterCategory(data);
+                        } else {
+                            setFilterProducts(data);
+                        }
+                    })
+                } catch(e){
+                    console.log(e);
+                }
+            }
+
+            if(props.filterCategory > 0 && props.filterCity === 0){
+                filterCategory(products);
+            }
+
+            if(props.filterCity > 0){
+                filterCity();
+            }
+
+        }, [props.filterCity, props.filterCategory, products]
     )
 
     return(
         <div className="card-list-container">
             <h2>Recomendaciones</h2>
-            {products ? 
+            {filterProducts.length > 0 ? 
             <div>
-            { filterProduct()}
+            { filterProducts.map((product, index) => <CardList details={product} key={index}/>) }
             </div>
             : <></>}
         </div>

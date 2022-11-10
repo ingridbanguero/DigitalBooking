@@ -15,22 +15,16 @@ import Footer from "../../components/Footer/Footer"
 import Body from "../../components/Body/Body";
 
 const Product = () => {
-    console.log("Holi")
     let { id } = useParams();
     const [product, setProduct] = useState(null);
     
     // Traer producto por id
     useEffect(
         () => {
-            console.log(id);
             try{
                 fetch(`${baseUrl}/productos/${id}`)
                 .then(response => response.json())
-                .then(data => {
-                    setProduct(data);
-                    console.log(data)
-
-                })
+                .then(data => setProduct(data))
             }catch(e){
                 console.log(e);
             }

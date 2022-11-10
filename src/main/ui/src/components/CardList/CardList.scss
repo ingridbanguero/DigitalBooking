@@ -13,6 +13,7 @@
             width: 100%;
             object-fit: cover;
             object-position: center center;
+            max-height: 250px;
         }
     }
     .card-details {
@@ -121,6 +122,8 @@
             min-width: 250px;
             img {
                 border-radius: 2%;
+                max-height: 285px;
+
             }
         }
         button{
