@@ -11,7 +11,7 @@ import ProductFeatures from "../../components/ProductFeatures/ProductFeatures";
 import ProductReservation from "../../components/ProductReservation/ProductReservation";
 import ProductMap from "../../components/ProductMap/ProductMap";
 import ProductPolicies from "../../components/ProductPolicies/ProductPolicies";
-import Footer from "../../components/Footer/Footer"
+import Footer from "../../components/Footer/Footer";
 import Body from "../../components/Body/Body";
 
 const Product = () => {

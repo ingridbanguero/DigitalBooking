@@ -40,7 +40,7 @@
         h3 {
             margin: 30px 0px 10px 0px;
         }
-        > button {
+        > a button {
             width: 100%;
             background-color: var(--primary-color);
             color: var(--white);
@@ -82,7 +82,7 @@
                 width: 50%;
                 margin-right: 10px;
             }
-            button {
+            a {
                 width: 50%;
             }
         }
@@ -125,7 +125,7 @@
                     margin: 0;
                     padding: 10px 0px 20px 0px;
                 }
-                button {
+                a {
                     width: 100%;
                 }
             }
