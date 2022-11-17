@@ -59,5 +59,11 @@ public class ReservaController {
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
   }
+
+  @GetMapping("/producto")
+  public ResponseEntity<Collection<Reserva>> filtrarPorProducto(@RequestParam Integer id){    
+    return ResponseEntity.ok(reservaService.filtrarReservaPorProducto(id));   
+  }
+
     
 }

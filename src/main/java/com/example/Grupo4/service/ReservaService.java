@@ -1,5 +1,6 @@
 package com.example.Grupo4.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -35,5 +36,17 @@ public class ReservaService {
     public void eliminarReserva(Integer id){
       reservaRepository.deleteById(id);
     }
+
+    public Collection<Reserva> filtrarReservaPorProducto(Integer id){
+        Collection<Reserva> todasLasReservas = reservaRepository.findAll();
+        Collection<Reserva> revervasFiltradas = new ArrayList<>();
+    
+        for (Reserva reserva : todasLasReservas){
+          if(reserva.getProducto().getId().equals(id)){
+            revervasFiltradas.add(reserva);
+          };
+        }    
+        return revervasFiltradas;
+      }
     
 }
