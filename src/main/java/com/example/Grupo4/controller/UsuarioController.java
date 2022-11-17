@@ -1,10 +1,18 @@
 package com.example.Grupo4.controller;
 
+import com.example.Grupo4.dto.AuthRequestDTO;
+import com.example.Grupo4.dto.AuthResponseDTO;
 import com.example.Grupo4.model.Usuario;
 import com.example.Grupo4.service.UsuarioService;
+import com.example.Grupo4.util.JwtUtil;
 import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,15 +29,39 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
 public class UsuarioController {
 
+  private final AuthenticationManager authenticationManager;
+
+  private final UserDetailsService userDetailsService;
+
+  private final JwtUtil jwtUtil;
+
   private final UsuarioService service;
 
-  public UsuarioController(UsuarioService service) {
+  public UsuarioController(AuthenticationManager authenticationManager, UserDetailsService userDetailsService, JwtUtil jwtUtil,
+                           UsuarioService service) {
+    this.authenticationManager = authenticationManager;
+    this.userDetailsService = userDetailsService;
+    this.jwtUtil = jwtUtil;
     this.service = service;
   }
 
   @PostMapping
   public ResponseEntity<Usuario> crear(@RequestBody Usuario usuario) {
     return new ResponseEntity<>(service.crearUsuario(usuario), HttpStatus.CREATED);
+  }
+
+  @PostMapping("/auth")
+  public ResponseEntity<?> generarToken(@RequestBody AuthRequestDTO authRequest) throws Exception {
+    try {
+      authenticationManager.authenticate(
+          new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getContrasenna()));
+    } catch (BadCredentialsException e) {
+      throw new Exception("Credenciales inválidas");
+    }
+    final UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getEmail());
+    final String jwt = jwtUtil.generateToken(userDetails);
+
+    return ResponseEntity.ok(new AuthResponseDTO((jwt)));
   }
 
   @GetMapping("/{id}")
