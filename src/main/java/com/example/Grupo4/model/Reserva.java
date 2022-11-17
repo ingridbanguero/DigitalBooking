@@ -1,5 +1,6 @@
 package com.example.Grupo4.model;
 
+import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,11 +28,11 @@ public class Reserva {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  private String horaInicio;
+  private String hora;
 
-  private String fechaInicio;
+  private LocalDate fechaInicio;
 
-  private String fechaFinal;
+  private LocalDate fechaFinal;
 
   @ManyToOne(cascade = CascadeType.MERGE)
   @JoinColumn(name = "producto_id")
