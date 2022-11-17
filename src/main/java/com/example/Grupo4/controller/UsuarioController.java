@@ -46,8 +46,12 @@ public class UsuarioController {
   }
 
   @PostMapping
-  public ResponseEntity<Usuario> crear(@RequestBody Usuario usuario) {
-    return new ResponseEntity<>(service.crearUsuario(usuario), HttpStatus.CREATED);
+  public ResponseEntity<?> crear(@RequestBody Usuario usuario) {
+    try {
+      return new ResponseEntity<>(service.crearUsuario(usuario), HttpStatus.CREATED);
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body("El email ya se encuentra registrado");
+    }
   }
 
   @PostMapping("/auth")
