@@ -53,8 +53,4 @@ public class Producto {
   @ManyToOne(cascade = CascadeType.MERGE)
   @JoinColumn(name = "ciudad_id")
   private Ciudad ciudad;
-
-  @OneToMany(cascade = CascadeType.MERGE)
-  @JoinColumn(name = "producto_id")
-  private List<Reserva> reservas;
 }

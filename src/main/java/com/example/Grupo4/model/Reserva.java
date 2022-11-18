@@ -39,6 +39,6 @@ public class Reserva {
   private Producto producto;
 
   @ManyToOne(cascade = CascadeType.MERGE)
-  @JoinColumn(name = "cliente_id")
-  private Cliente cliente;
+  @JoinColumn(name = "usuario_id")
+  private Usuario usuario;
 }
