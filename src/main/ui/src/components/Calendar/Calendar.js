@@ -24,6 +24,14 @@ const Calendar = (props) => {
         }
     })
 
+    useEffect(() => {
+        props.onSelectStartDate(startDate);
+    }, [props, startDate])
+
+    useEffect(() => {
+        props.onSelectEndDate(endDate);
+    }, [props, endDate])
+
     return(
         <div className='calendar'>
             <div className="pantalla">
