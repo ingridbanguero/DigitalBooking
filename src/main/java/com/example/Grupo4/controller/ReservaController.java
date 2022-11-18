@@ -42,11 +42,11 @@ public class ReservaController {
   }
 
   @PutMapping
-  public ResponseEntity<Reserva> modificar(@RequestBody Reserva odontologo){
-    if (reservaService.consultarReserva(odontologo.getId()).isEmpty()){
+  public ResponseEntity<Reserva> modificar(@RequestBody Reserva reserva){
+    if (reservaService.consultarReserva(reserva.getId()).isEmpty()){
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     } else{
-      return ResponseEntity.ok(reservaService.modificarReserva(odontologo));
+      return ResponseEntity.ok(reservaService.modificarReserva(reserva));
     }
   }
 
