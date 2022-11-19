@@ -3,12 +3,16 @@ import React, { useState, useEffect } from 'react';
 import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import es from "date-fns/locale/es";
+import { useLocation } from "react-router-dom";
+import { useParams } from "react-router";
 
 const Calendar = (props) => { 
+    const { pathname } = useLocation();
+    let { id } = useParams();
     const [dateRange, setDateRange] = useState([null, null]);
     const [startDate, endDate] = dateRange;
     const [width, setWidth] = useState(window.innerWidth);
-
+    
     registerLocale("es", es);
     setDefaultLocale("es");
 
@@ -24,13 +28,13 @@ const Calendar = (props) => {
         }
     })
 
-    useEffect(() => {
-        props.onSelectStartDate(startDate);
-    }, [props, startDate])
-
-    useEffect(() => {
-        props.onSelectEndDate(endDate);
-    }, [props, endDate])
+    const handleSelectDate = (date) => {
+        if(pathname === `/product/${id}/reserva`){
+            console.log(date);
+            props.onSelectStartDate(date[0]);   
+            props.onSelectEndDate(date[1]);   
+        }
+    }
 
     return(
         <div className='calendar'>
@@ -43,6 +47,7 @@ const Calendar = (props) => {
                 placeholderText="Check-in - Check out"
                 onChange={(update) => {
                     setDateRange(update);
+                    handleSelectDate(update);
                 }}
                 dateFormat="yyyy/M/d"
                 monthsShown={width < 768 ? 1 : 2}

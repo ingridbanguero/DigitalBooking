@@ -11,6 +11,8 @@ const ReservaCalendar = (props) => {
     const handleEndDate = (endDate) => {
         if(endDate !== null){
             props.onSelectEndDate(formatDate(endDate));
+        } else{
+            props.onSelectEndDate("");
         }
     }
 
