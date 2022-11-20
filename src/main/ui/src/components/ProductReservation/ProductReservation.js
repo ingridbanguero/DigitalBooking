@@ -1,9 +1,12 @@
+import React, { useContext } from 'react';
 import "./ProductReservation.scss";
 import Calendar from "../Calendar/Calendar";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
+import { UserContext } from "../../context/UserContext";
 
 const ProductReservation = () => {
+    const { user } = useContext(UserContext);
     let { id } = useParams();
 
     return(
@@ -16,7 +19,10 @@ const ProductReservation = () => {
                     </div>
                     <div className="reservation">
                         <h3>Agregá tus fechas de viaje para obtener precios exactos</h3>
-                        <Link to={`/product/${id}/reserva`}><button className="button1" >Iniciar reserva</button></Link>
+                        { user.auth ? 
+                        <Link to={`/product/${id}/reserva`}><button className="button1" >Iniciar reserva</button></Link> : 
+                        <Link to={`/login?reserva`}><button className="button1" >Iniciar reserva</button></Link>
+                        }
                     </div>
                 </div>
             </div>

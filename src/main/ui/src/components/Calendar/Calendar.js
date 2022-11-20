@@ -30,7 +30,6 @@ const Calendar = (props) => {
 
     const handleSelectDate = (date) => {
         if(pathname === `/product/${id}/reserva`){
-            console.log(date);
             props.onSelectStartDate(date[0]);   
             props.onSelectEndDate(date[1]);   
         }
