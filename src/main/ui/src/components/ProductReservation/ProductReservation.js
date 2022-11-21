@@ -21,7 +21,7 @@ const ProductReservation = () => {
                         <h3>Agregá tus fechas de viaje para obtener precios exactos</h3>
                         { user.auth ? 
                         <Link to={`/product/${id}/reserva`}><button className="button1" >Iniciar reserva</button></Link> : 
-                        <Link to={`/login?reserva`}><button className="button1" >Iniciar reserva</button></Link>
+                        <Link to={`/login?reserva=${id}`}><button className="button1" >Iniciar reserva</button></Link>
                         }
                     </div>
                 </div>

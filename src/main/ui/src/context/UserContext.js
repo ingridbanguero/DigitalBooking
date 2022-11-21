@@ -1,23 +1,47 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
 
-    const [user, setUser] = useState({ name: '', auth: false });
+    const [user, setUser] = useState({ 
+        auth: false,
+        id: null,
+        nombre: '',
+        apellido: '',
+        email: '',
+        rol: '',
+        ciudad: '',
+        token: ''
+    });
 
-    const login = (name) => {
+    useEffect(() => {
+        const loggedDigitalAppUser = localStorage.getItem('loggedDigitalAppUser');
+        if(loggedDigitalAppUser){
+            const user = JSON.parse(loggedDigitalAppUser);
+            login(user);
+        }
+    }, [])
+
+    const login = (userData) => {
         setUser((user) => ({
-        name: name,
-        auth: true,
+            ...userData,
+            auth: true,
         }));
     };
 
     const logout = () => {
         setUser((user) => ({
-        name: '',
-        auth: false,
+            auth: false,
+            id: null,
+            nombre: '',
+            apellido: '',
+            email: '',
+            rol: '',
+            ciudad: '',
+            token: ''
         }));
+        localStorage.removeItem('loggedDigitalAppUser');
     };
 
     return (

@@ -13,6 +13,24 @@
         flex-direction: column;
         width: 80%;
         max-width: 360px;
+        .reserva-alert{
+            display: flex;
+            background-color: rgba(255, 0, 0, 0.1);
+            border-radius: 8px;
+            align-items: center;
+            padding: 24px 16px;
+            margin-bottom: 12px;
+            justify-content: center;
+            i{
+                color: #B00020;
+                font-size: 28px;
+                padding-right: 14px;
+            }
+            p {
+                color: #B00020;
+                font-size: 14px;
+            }
+        }
         h1{
             color: var(--primary-color);
             font-size: 24px;
@@ -72,11 +90,21 @@
     @media screen and (min-width: 768px){
         padding-top: 82px;
         height: calc(100vh - 98px);
+        .container {
+            .reserva-alert{
+                margin-bottom: 30px;
+            }
+        }
+        
     }
 
     @media screen and (min-width: 1024px){
         .container{ 
             max-width: 448px;
+            .reserva-alert{
+                margin-bottom: 26px;
+                padding: 18px 14px;
+            }
             form {
                 button {
                     max-width: 206px;
