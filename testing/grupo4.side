@@ -202,7 +202,7 @@
       "id": "5524f1ae-f2ef-4ae9-b08e-00a3d230877a",
       "comment": "",
       "command": "assertElementPresent",
-      "target": "css=.gallery-1 > img",
+      "target": "xpath=//img[@alt='slide-images']",
       "targets": [
         ["css=.gallery-1 > img", "css:finder"],
         ["xpath=//img[@alt='slide-images']", "xpath:img"],
@@ -250,7 +250,7 @@
       "id": "524fd3e0-6874-417a-b357-39c100f1482e",
       "comment": "",
       "command": "assertText",
-      "target": "css=.button1:nth-child(2)",
+      "target": "xpath=//button[contains(.,'Iniciar reserva')]",
       "targets": [
         ["css=.button1:nth-child(2)", "css:finder"],
         ["xpath=//div[@id='root']/div/section/main/div[6]/div/div/div[2]/button", "xpath:idRelative"],
@@ -282,6 +282,99 @@
       ],
       "value": ""
     }]
+  }, {
+    "id": "aa7b9bf0-7106-41e3-a7fd-ea4e5cc59ccb",
+    "name": "login",
+    "commands": [{
+      "id": "3e03f138-2d1f-422d-b9dd-db380d9f1bd5",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6ef2ff62-3f21-438e-9a3e-ae56aa94253b",
+      "comment": "",
+      "command": "setSpeed",
+      "target": "1000",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b68d5ef8-3443-4919-a576-8337462ef3b7",
+      "comment": "",
+      "command": "click",
+      "target": "css=li:nth-child(3) h3",
+      "targets": [
+        ["css=li:nth-child(3) h3", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/nav/ul/li[3]/a/h3", "xpath:idRelative"],
+        ["xpath=//li[3]/a/h3", "xpath:position"],
+        ["xpath=//h3[contains(.,'Iniciar Sesión')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d32ad8ce-2a44-463d-a747-55751ab02fd5",
+      "comment": "",
+      "command": "click",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=form > input:nth-child(2)", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/div/form/input", "xpath:idRelative"],
+        ["xpath=//form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7ce212e1-f48b-4c96-82c1-7d8342c15b96",
+      "comment": "",
+      "command": "type",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=form > input:nth-child(2)", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/div/form/input", "xpath:idRelative"],
+        ["xpath=//form/input", "xpath:position"]
+      ],
+      "value": "test@user.com"
+    }, {
+      "id": "a99a413a-d3cc-4e42-800b-1182a93e340a",
+      "comment": "",
+      "command": "type",
+      "target": "name=contrasenna",
+      "targets": [
+        ["name=contrasenna", "name"],
+        ["css=input:nth-child(4)", "css:finder"],
+        ["xpath=//input[@name='contrasenna']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/div/form/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "pepito123"
+    }, {
+      "id": "e2646b1f-46cb-414e-a59c-7f5e8c7a5804",
+      "comment": "",
+      "command": "click",
+      "target": "css=button",
+      "targets": [
+        ["css=button", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div[2]/div/form/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Ingresar')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "b67d418c-b47a-403e-864d-cf3e6315874b",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.menu-login",
+      "targets": [
+        ["css=.menu-login", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/nav/ul", "xpath:idRelative"],
+        ["xpath=//ul", "xpath:position"]
+      ],
+      "value": "BR\\nHola,\\nBruno Rodriguez"
+    }]
   }],
   "suites": [{
     "id": "fb54b6e6-6325-496a-a794-26913e613921",
@@ -290,6 +383,13 @@
     "parallel": true,
     "timeout": 300,
     "tests": ["4c475f98-d8d6-4a42-990e-81115ea32a29", "5c329b05-ae91-4c3b-b55d-fde368630029", "65e6656a-2159-414c-a380-0126cf61bee5"]
+  }, {
+    "id": "143a3426-17cd-4259-a4f6-9d72ca7b24bc",
+    "name": "sprint 2",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["aa7b9bf0-7106-41e3-a7fd-ea4e5cc59ccb"]
   }],
   "urls": ["http://0521ptc8n2-grupo4-frontend.s3-website.us-east-2.amazonaws.com/"],
   "plugins": []
