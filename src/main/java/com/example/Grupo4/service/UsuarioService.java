@@ -29,6 +29,10 @@ public class UsuarioService {
     return repository.findById(id);
   }
 
+  public Usuario consultarUsuarioPorEmail(String email) {
+    return repository.getUserByEmail(email);
+  }
+
   public Usuario modificarUsuario(Usuario u) {
     u.setContrasenna(encoder.encode(u.getContrasenna()));
     return repository.save(u);

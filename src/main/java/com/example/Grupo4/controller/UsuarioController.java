@@ -2,9 +2,11 @@ package com.example.Grupo4.controller;
 
 import com.example.Grupo4.dto.AuthRequestDTO;
 import com.example.Grupo4.dto.AuthResponseDTO;
+import com.example.Grupo4.dto.UsuarioDTO;
 import com.example.Grupo4.model.Usuario;
 import com.example.Grupo4.service.UsuarioService;
 import com.example.Grupo4.util.JwtUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,7 +67,10 @@ public class UsuarioController {
     final UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getEmail());
     final String jwt = jwtUtil.generateToken(userDetails);
 
-    return ResponseEntity.ok(new AuthResponseDTO((jwt)));
+    Usuario usuario = service.consultarUsuarioPorEmail(authRequest.getEmail());
+    ObjectMapper mapper = new ObjectMapper();
+    UsuarioDTO usuarioDTO = mapper.convertValue(usuario, UsuarioDTO.class);
+    return ResponseEntity.ok(new AuthResponseDTO(usuarioDTO, jwt));
   }
 
   @GetMapping("/{id}")

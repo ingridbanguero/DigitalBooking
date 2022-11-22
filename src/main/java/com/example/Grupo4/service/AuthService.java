@@ -3,7 +3,6 @@ package com.example.Grupo4.service;
 import com.example.Grupo4.model.Usuario;
 import com.example.Grupo4.repository.IUsuarioRepository;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,15 +23,15 @@ public class AuthService implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-    Optional<Usuario> usuario = repository.getUserByEmail(email);
+    Usuario usuario = repository.getUserByEmail(email);
 
     Set<GrantedAuthority> autorizaciones = new HashSet<>();
-    GrantedAuthority autorizacion = new SimpleGrantedAuthority(usuario.get().getRol().getNombre());
+    GrantedAuthority autorizacion = new SimpleGrantedAuthority(usuario.getRol().getNombre());
     autorizaciones.add(autorizacion);
 
     User userDetail = new User(
-        usuario.get().getEmail(),
-        usuario.get().getContrasenna(),
+        usuario.getEmail(),
+        usuario.getContrasenna(),
         true,
         true,
         true,
