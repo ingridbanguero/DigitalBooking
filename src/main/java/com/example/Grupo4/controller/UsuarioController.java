@@ -31,16 +31,16 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
 public class UsuarioController {
 
-  private final AuthenticationManager authenticationManager;
-
   private final UserDetailsService userDetailsService;
-
-  private final JwtUtil jwtUtil;
 
   private final UsuarioService service;
 
-  public UsuarioController(AuthenticationManager authenticationManager, UserDetailsService userDetailsService, JwtUtil jwtUtil,
-                           UsuarioService service) {
+  private final AuthenticationManager authenticationManager;
+
+  private final JwtUtil jwtUtil;
+
+  public UsuarioController(AuthenticationManager authenticationManager, UserDetailsService userDetailsService,
+                           JwtUtil jwtUtil, UsuarioService service) {
     this.authenticationManager = authenticationManager;
     this.userDetailsService = userDetailsService;
     this.jwtUtil = jwtUtil;
@@ -65,12 +65,12 @@ public class UsuarioController {
       throw new Exception("Credenciales inválidas");
     }
     final UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getEmail());
-    final String jwt = jwtUtil.generateToken(userDetails);
+    final String token = jwtUtil.generateToken(userDetails);
 
-    Usuario usuario = service.consultarUsuarioPorEmail(authRequest.getEmail());
     ObjectMapper mapper = new ObjectMapper();
-    UsuarioDTO usuarioDTO = mapper.convertValue(usuario, UsuarioDTO.class);
-    return ResponseEntity.ok(new AuthResponseDTO(usuarioDTO, jwt));
+    Usuario usuario = service.consultarUsuarioPorEmail(authRequest.getEmail());
+
+    return ResponseEntity.ok(new AuthResponseDTO(mapper.convertValue(usuario, UsuarioDTO.class), token));
   }
 
   @GetMapping("/{id}")
@@ -92,12 +92,12 @@ public class UsuarioController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<Usuario> eliminar(@PathVariable Integer id) {
+  public ResponseEntity<?> eliminar(@PathVariable Integer id) {
     if (service.consultarUsuario(id).isEmpty()) {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      return new ResponseEntity<>("El usuario no existe.", HttpStatus.NOT_FOUND);
     } else {
       service.eliminarUsuario(id);
-      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+      return new ResponseEntity<>("Usuario eliminado correctamente.", HttpStatus.NO_CONTENT);
     }
   }
 }

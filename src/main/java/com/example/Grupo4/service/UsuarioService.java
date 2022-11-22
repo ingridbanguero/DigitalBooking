@@ -25,7 +25,6 @@ public class UsuarioService {
   }
 
   public Optional<Usuario> consultarUsuario(Integer id) {
-    //encoder.matches(contrasenna /*contraseña pasada*/, user.getPassword () /*contraseña encontrada*/)
     return repository.findById(id);
   }
 
