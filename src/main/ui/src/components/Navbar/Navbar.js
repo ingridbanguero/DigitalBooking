@@ -24,11 +24,11 @@ const Navbar = () => {
         user.auth ? 
         <ul className='menu-login'>
             <li>
-                <span className="login-letter"><p>BR</p></span>
+                <span className="login-letter"><p>{user.nombre.substr(0,1)}{user.apellido.substr(0,1)}</p></span>
                 <div>
                     <span className="login-close" onClick={logout}></span>
                     <p className='text1'>Hola,</p>
-                    <p className='text1'>Bruno Rodriguez</p>
+                    <p className='text1'>{user.nombre} {user.apellido}</p>
                 </div>
             </li>
         </ul> : 
