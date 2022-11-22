@@ -1,6 +1,6 @@
 import "./ReservaForm.scss";
 
-const ReservaForm = () => {
+const ReservaForm = ({user}) => {
     return(
         <div className="reserva-form">
             <div className="reserva-content">
@@ -8,19 +8,19 @@ const ReservaForm = () => {
                 <form>
                     <div>
                         <label className="text2">Nombre</label>   
-                        <input className="text2" type="text" name="name" autoComplete="off" value="Bruno" disabled/>
+                        <input className="text2" type="text" name="name" autoComplete="off" value={user.nombre} disabled/>
                     </div>
                     <div>
                         <label className="text2">Apellido</label>   
-                        <input className="text2" type="text" name="name" autoComplete="off" value="Rodriguez" disabled/>
+                        <input className="text2" type="text" name="name" autoComplete="off" value={user.apellido} disabled/>
                     </div>
                     <div>
                         <label className="text2">Correo electrónico</label>   
-                        <input className="text2" type="email" name="name" autoComplete="off" value="brodriguez@gmail.com" disabled/>
+                        <input className="text2" type="email" name="name" autoComplete="off" value={user.email} disabled/>
                     </div>
                     <div>
                         <label className="text2">Ciudad</label>   
-                        <input className="text2" type="text" name="name" autoComplete="off"/>
+                        <input className="text2" type="text" name="name" autoComplete="off" value={user.ciudad}/>
                     </div>
                 </form>
             </div>
