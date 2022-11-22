@@ -16,17 +16,17 @@ backend:
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
     - echo "Stop the backend..."
-    - ssh me@$DEPLOY_SERVER_IP "pfkill -f java"
+    - ssh ubuntu@$DEPLOY_SERVER_IP "pfkill -f java"
     - echo "Stop complete."
     - echo "Compiling the backend..."
-    - ssh me@$DEPLOY_SERVER_IP "cd grupo-04/"
-    - ssh me@$DEPLOY_SERVER_IP "git pull"
-    - ssh me@$DEPLOY_SERVER_IP "mvn package"
+    - ssh ubuntu@$DEPLOY_SERVER_IP "cd grupo-04/"
+    - ssh ubuntu@$DEPLOY_SERVER_IP "git pull"
+    - ssh ubuntu@$DEPLOY_SERVER_IP "mvn package"
     - echo "Compile complete."
     - echo "Start the backend..."
-    - ssh me@$DEPLOY_SERVER_IP "cd grupo-04/target"
-    - ssh me@$DEPLOY_SERVER_IP "java -jar Grupo4-0.0.1-SNAPSHOT.jar &"
-    - ssh me@$DEPLOY_SERVER_IP "exit"
+    - ssh ubuntu@$DEPLOY_SERVER_IP "cd grupo-04/target"
+    - ssh ubuntu@$DEPLOY_SERVER_IP "java -jar Grupo4-0.0.1-SNAPSHOT.jar &"
+    - ssh ubuntu@$DEPLOY_SERVER_IP "exit"
     - echo "Start complete."
   rules:
     - when: manual 
