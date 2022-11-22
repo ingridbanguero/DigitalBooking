@@ -39,7 +39,7 @@ const FormLogin = () => {
         })
         .then(data => {
             data = {
-                id: 1,
+                id: 2,
                 nombre: "Bruno",
                 apellido: "Rodriguez",
                 email: "prueba@gmail.com",

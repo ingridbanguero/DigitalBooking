@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
@@ -6,24 +6,46 @@ import baseUrl from '../../helpers/api';
 import './FormRegister.scss';
 
 const FormRegister = () => { 
-
+    const [errorForm, setErrorForm] = useState("");
     const { register, formState: { errors }, handleSubmit, watch } = useForm();
-    const password = useRef({});
-    password.current = watch("password", "");
+    const contrasenna = useRef({});
+    contrasenna.current = watch("contrasenna", "");
 
     const onSubmit = evento => {
-        console.log(evento);
+        const {contrasenna_repeat, ...dataUser} = evento;
+        dataUser.rol = {id: 2};
+
         // Enviar datos
         fetch(`${baseUrl}/usuarios`, {
             method: "POST",
-            body: JSON.stringify(evento),
+            body: JSON.stringify(dataUser),
             headers: {"Content-type": "application/json; charset=UTF-8"}
+        })
+        .then(response => {
+            if (!response.ok) {
+                setErrorForm("Lamentablemente no ha podido registrarse. Por favor intente más tarde");
+                throw new Error("HTTP status " + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            // Obtener token y loguear usuario
+            alert("Usuario creado")
         })
     } 
 
     return(
         <div onSubmit={handleSubmit(onSubmit)} className='formRegister'> 
             <div className="container">
+            {
+                errorForm !== "" ?
+                <div className='reserva-alert'>
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <p>{errorForm}</p>
+                </div> :
+                <></>
+            }
              <h1>Crear Cuenta</h1>  
                 <form noValidate>
                     <div>
@@ -53,7 +75,7 @@ const FormRegister = () => {
                     <ErrorMessage errors={errors} name="email" render={({ message }) => <p className="error-message">{message}</p>}/>
                     
                     <label>Contraseña</label> 
-                    <input type="password" name="password" required autoComplete="off"{...register("password", { 
+                    <input type="password" name="contrasenna" required autoComplete="off"{...register("contrasenna", { 
                         required: "Este campo es requerido.", 
                         minLength: {
                             value: 7,
@@ -61,16 +83,16 @@ const FormRegister = () => {
                           }
                         })}
                         />   
-                    <ErrorMessage errors={errors} name="password" render={({ message }) => <p className="error-message">{message}</p>}/>
+                    <ErrorMessage errors={errors} name="contrasenna" render={({ message }) => <p className="error-message">{message}</p>}/>
 
                     <label>Confirmar contraseña</label>   
-                    <input type="password" name="password_repeat" required autoComplete="off"{...register("password_repeat", { 
+                    <input type="password" name="contrasenna_repeat" required autoComplete="off"{...register("contrasenna_repeat", { 
                         required: "Este campo es requerido.", 
                         validate: value =>
-                            value === password.current || "Las contraseñas no coinciden"
+                            value === contrasenna.current || "Las contraseñas no coinciden"
                         })}
                     />   
-                    <ErrorMessage errors={errors} name="password_repeat" render={({ message }) => <p className="error-message">{message}</p>}/> 
+                    <ErrorMessage errors={errors} name="contrasenna_repeat" render={({ message }) => <p className="error-message">{message}</p>}/> 
 
                     <button type="submit">Crear cuenta</button>   
                     <p>¿Ya tienes cuenta? <Link to="/login"><span>Iniciar sesión</span></Link></p>

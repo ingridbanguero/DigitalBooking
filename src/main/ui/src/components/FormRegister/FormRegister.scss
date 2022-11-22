@@ -13,6 +13,24 @@
         flex-direction: column;
         width: 80%;
         max-width: 360px;
+        .reserva-alert{
+            display: flex;
+            background-color: rgba(255, 0, 0, 0.1);
+            border-radius: 8px;
+            align-items: center;
+            padding: 24px 16px;
+            margin-bottom: 12px;
+            justify-content: center;
+            i{
+                color: #B00020;
+                font-size: 28px;
+                padding-right: 14px;
+            }
+            p {
+                color: #B00020;
+                font-size: 14px;
+            }
+        }
         h1{
             color: var(--primary-color);
             font-size: 24px;

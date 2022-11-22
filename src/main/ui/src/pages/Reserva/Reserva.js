@@ -49,7 +49,7 @@ const Reserva = () => {
         if(user.auth){
             validateFields();
             console.log(user.token);
-            if(!errorDate && !errorHour){
+            if(hour && startDate && endDate){
                 const reservaData = {
                     hora: hour,
                     fechaInicio: formatDate(startDate),
