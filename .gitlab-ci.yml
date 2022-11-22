@@ -16,7 +16,7 @@ backend:
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
     - echo "Stop the backend..."
-    - ssh ubuntu@$DEPLOY_SERVER_IP "pfkill -f java"
+    - ssh ubuntu@$DEPLOY_SERVER_IP "pkill -f java"
     - echo "Stop complete."
     - echo "Compiling the backend..."
     - ssh ubuntu@$DEPLOY_SERVER_IP "cd grupo-04/"
