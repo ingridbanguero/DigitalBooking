@@ -41,7 +41,6 @@ const Reserva = () => {
     // Formato AAAA-MM-DD
     const formatDate = (date) => {
         date = date.split('/').reverse().join("-");
-        console.log(date);
         return date;
     }
 
@@ -61,7 +60,6 @@ const Reserva = () => {
                         id: user.id
                     }
                 }
-                console.log(reservaData);
                 fetch(`${baseUrl}/reservas`, {
                     method: "POST",
                     body: JSON.stringify(reservaData),

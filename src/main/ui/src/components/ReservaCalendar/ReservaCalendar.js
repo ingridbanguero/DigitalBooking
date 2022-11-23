@@ -1,7 +1,41 @@
+import React, { useState, useEffect } from 'react';
 import "./ReservaCalendar.scss";
 import Calendar from "../Calendar/Calendar";
+import baseUrl from "../../helpers/api";
+import { useParams } from "react-router";
 
 const ReservaCalendar = (props) => {
+    let { id } = useParams();
+    const [disabledDates, setDisabledDates] = useState([]);
+
+    useEffect(
+        () => {
+            try{
+                fetch(`${baseUrl}/reservas/producto?id=${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    let datesToDisabled = [];
+                    data.forEach(reserva => {
+                        let fechaInicio = createDate(reserva.fechaInicio);
+                        let fechaFin = createDate(reserva.fechaFinal);
+                        // Agregar fechas intermedias
+                        while(fechaFin.getTime() >= fechaInicio.getTime()){
+                            fechaInicio.setDate(fechaInicio.getDate() + 1);
+                            datesToDisabled.push(Date.parse(fechaInicio));
+                        }
+                    })
+                    setDisabledDates(datesToDisabled);
+                })
+            } catch(e){
+                console.log(e);
+            }
+        }, [id]
+    )
+
+    const createDate = (strDate) => {
+        let date = strDate.split('-');
+        return new Date(date[0], date[1] - 1, date[2]);
+    }
     const handleStartDate = (startDate) => {
         if(startDate !== null){
             props.onSelectStartDate(formatDate(startDate));
@@ -15,6 +49,7 @@ const ReservaCalendar = (props) => {
             props.onSelectEndDate("");
         }
     }
+    
 
     const formatDate = (date) => {
         return [
@@ -29,7 +64,7 @@ const ReservaCalendar = (props) => {
             <div className="reserva-content">
                 <h2>Seleccioná tu fecha de reserva</h2>
                 <div>
-                    <Calendar onSelectStartDate={handleStartDate} onSelectEndDate={handleEndDate}/>
+                    <Calendar disabledDates={disabledDates} onSelectStartDate={handleStartDate} onSelectEndDate={handleEndDate}/>
                 </div>
             </div>
             

@@ -39,10 +39,11 @@ const FormLogin = () => {
         })
         .then(data => {
             data = {
-                id: 2,
-                nombre: "Bruno",
-                apellido: "Rodriguez",
-                email: "prueba@gmail.com",
+                id: data.usuario.id,
+                nombre: data.usuario.nombre,
+                apellido: data.usuario.apellido,
+                email: data.usuario.email,
+                ciudad: data.usuario.ciudad,
                 token: data.jwt
             }
             console.log(data);
