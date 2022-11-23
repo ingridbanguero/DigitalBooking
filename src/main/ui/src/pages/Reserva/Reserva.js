@@ -12,6 +12,7 @@ import ReservaCalendar from "../../components/ReservaCalendar/ReservaCalendar";
 import ReservaSchedule from "../../components/ReservaSchedule/ReservaSchedule";
 import ReservaDetails from "../../components/ReservaDetails/ReservaDetails";
 import ProductPolicies from "../../components/ProductPolicies/ProductPolicies";
+import Swal from 'sweetalert2';
 
 const Reserva = () => {
     let { id } = useParams();
@@ -72,10 +73,23 @@ const Reserva = () => {
                     if (!response.ok) {
                         throw new Error("HTTP status " + response.status);
                     }
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'No ha sido posible realizar su reserva',
+                        icon: 'error',
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#F0572D',
+                    })
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data);
+                    Swal.fire({
+                        title: 'Reserva exitosa',
+                        text: 'Su reserva ha sido generada con exito',
+                        icon: 'success',
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#F0572D',
+                    })
                 })
             }
         } else {

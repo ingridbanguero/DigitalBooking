@@ -1,13 +1,15 @@
 import React, { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import baseUrl from '../../helpers/api';
 import './FormRegister.scss';
+import Swal from 'sweetalert2';
 
 const FormRegister = () => { 
     const [errorForm, setErrorForm] = useState("");
     const { register, formState: { errors }, handleSubmit, watch } = useForm();
+    const navigate = useNavigate();
     const contrasenna = useRef({});
     contrasenna.current = watch("contrasenna", "");
 
@@ -29,9 +31,17 @@ const FormRegister = () => {
             return response.json();
         })
         .then(data => {
-            console.log(data);
-            // Obtener token y loguear usuario
-            alert("Usuario creado")
+            Swal.fire({
+                title: 'Usuario creado',
+                text: 'Su usuario ha sido creado, ya puede iniciar sesión.',
+                icon: 'success',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#F0572D',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate("/login");
+                }
+            })
         })
     } 
 
