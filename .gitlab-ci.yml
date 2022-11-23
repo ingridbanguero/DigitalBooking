@@ -13,61 +13,19 @@ backend:
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
-    - echo "Stop the backend..."
-    - ssh ubuntu@$DEPLOY_SERVER_IP "pkill -f java"
-    - echo "Stop complete."
-    - echo "Compiling the backend..."
-    - ssh ubuntu@$DEPLOY_SERVER_IP "cd grupo-04/"
-    - ssh ubuntu@$DEPLOY_SERVER_IP "git pull"
-    - ssh ubuntu@$DEPLOY_SERVER_IP "$USERNAME"
-    - ssh ubuntu@$DEPLOY_SERVER_IP "$PASSWORD"
-    - ssh ubuntu@$DEPLOY_SERVER_IP "mvn package"
-    - echo "Compile complete."
-    - echo "Start the backend..."
-    - ssh ubuntu@$DEPLOY_SERVER_IP "cd target/"
-    - ssh ubuntu@$DEPLOY_SERVER_IP "java -jar Grupo4-0.0.1-SNAPSHOT.jar &"
-    - ssh ubuntu@$DEPLOY_SERVER_IP "exit"
-    - echo "Start complete."
+    #- echo "Stop the backend..."
+    #- ssh -o StrictHostKeyChecking=no ubuntu@$DEPLOY_SERVER_IP "pkill java"
+    #- echo "Stop complete."
+    #- echo "Compiling the backend..."
+    #- ssh -o StrictHostKeyChecking=no ubuntu@$DEPLOY_SERVER_IP 'cd grupo-04/'
+    - ssh ubuntu@$DEPLOY_SERVER_IP 'cd grupo-04/; git pull'
+    - ssh ubuntu@$DEPLOY_SERVER_IP 'cd grupo-04/; mvn package'
+    #- echo "Compile complete."
+    #- echo "Start the backend..."
+    #- ssh ubuntu@$DEPLOY_SERVER_IP 'cd target/'
+    - ssh ubuntu@$DEPLOY_SERVER_IP 'cd grupo-04/target; java -jar Grupo4-0.0.1-SNAPSHOT.jar &'
+    - ssh ubuntu@$DEPLOY_SERVER_IP 'exit'
+    #- echo "Start complete."
   rules:
     - when: manual 
-
-build:       
-  stage: build
-  image: node:latest
-  cache:
-    paths:
-      - src/main/ui/node_modules/
-  script:
-    - echo "Compiling the code..."
-    - cd src/main/ui
-    - npm install
-    - npm run build
-    - echo "Compile complete."
-  artifacts:
-    paths:
-      - src/main/ui/build 
-  rules:
-    - when: manual 
-
-test:   
-  stage: test    
-  script:
-    - echo "Running unit tests..."
-    - echo "Test complete."
-  needs: ["build"]
-
-deploy:      
-  stage: deploy
-  image: 
-    name: amazon/aws-cli
-    entrypoint: [""]
-  script:
-    - echo "Deploying application..."
-    - aws --version
-    - aws s3 rm s3://$S3_BUCKET --recursive
-    - aws s3 cp src/main/ui/build s3://$S3_BUCKET --recursive
-    - echo "Application successfully deployed."
-  dependencies:
-    - build
