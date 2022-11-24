@@ -27,7 +27,6 @@ const ProductReservation = () => {
                             datesToDisabled.push(Date.parse(fechaInicio));
                         }
                     })
-                    console.log(datesToDisabled);
                     setDisabledDates(datesToDisabled);
                 })
             } catch(e){

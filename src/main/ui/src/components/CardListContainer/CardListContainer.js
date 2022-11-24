@@ -33,7 +33,6 @@ const CardListContainer = (props) => {
                                     endDate = new Date(endDate[0], endDate[1] - 1, endDate[2]);
                                     while(endDate.getTime() >= startDate.getTime()){
                                         startDate.setDate(startDate.getDate() + 1);
-                                        console.log(Date.parse(startDate));
                                         datesToDisabled.push(Date.parse(startDate));
                                     }
                                     product.disabledFechas = [...datesToDisabled];
@@ -90,7 +89,7 @@ const CardListContainer = (props) => {
             }
 
             // Al seleccionar ciudad
-            if(props.filterCity > 0){
+            if(props.filterCity > 0 && props.filterDates.length === 0){
                 filterCity();
             }
 
