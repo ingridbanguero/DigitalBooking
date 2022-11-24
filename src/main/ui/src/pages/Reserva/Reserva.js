@@ -34,7 +34,6 @@ const Reserva = () => {
     }
 
     const handleHour = (hour) => {
-        console.log(hour)
         setHour(hour);
     }
 
@@ -48,7 +47,6 @@ const Reserva = () => {
     const handleSubmitReserva = () => {
         if(user.auth){
             validateFields();
-            console.log(user.token);
             if(hour && startDate && endDate){
                 const reservaData = {
                     hora: hour,
@@ -71,15 +69,15 @@ const Reserva = () => {
                 })
                 .then(response => {
                     if (!response.ok) {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'No ha sido posible realizar su reserva',
+                            icon: 'error',
+                            confirmButtonText: 'OK',
+                            confirmButtonColor: '#F0572D',
+                        })
                         throw new Error("HTTP status " + response.status);
                     }
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'No ha sido posible realizar su reserva',
-                        icon: 'error',
-                        confirmButtonText: 'OK',
-                        confirmButtonColor: '#F0572D',
-                    })
                     return response.json();
                 })
                 .then(data => {
