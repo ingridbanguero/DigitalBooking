@@ -10,6 +10,7 @@ import CardCategoryContainer from "../../components/CardCategoryContainer/CardCa
 const Home = () => {
     const [categoryId, setCategoryId] = useState(0);
     const [cityId, setCityId] = useState(0);
+    const [dates, setDates] = useState([]);
 
     const handleSelectCity = (cityId) => {
         setCityId(cityId);
@@ -19,13 +20,17 @@ const Home = () => {
         setCategoryId(categoryId);
     }
 
+    const handleSelectDates = (dates) => {
+        setDates(dates);
+    }
+
     return(
         <>
             <Navbar/>
             <Body>
-                <Search onSelectCity={handleSelectCity}/>
+                <Search onSelectCity={handleSelectCity} onSelectDates={handleSelectDates}/>
                 <CardCategoryContainer onSelectCategory={handleSelectCategory}/>
-                <CardListContainer filterCity={cityId} filterCategory={categoryId}/>
+                <CardListContainer filterCity={cityId} filterCategory={categoryId} filterDates={dates}/>
             </Body>
             <Footer/>
         </>

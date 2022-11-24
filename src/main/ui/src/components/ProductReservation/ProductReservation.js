@@ -23,7 +23,6 @@ const ProductReservation = () => {
                         let fechaFin = createDate(reserva.fechaFinal);
                         // Agregar fechas intermedias
                         while(fechaFin.getTime() >= fechaInicio.getTime()){
-                            debugger;
                             fechaInicio.setDate(fechaInicio.getDate() + 1);
                             datesToDisabled.push(Date.parse(fechaInicio));
                         }

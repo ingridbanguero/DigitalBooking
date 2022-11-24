@@ -83,13 +83,7 @@ const Reserva = () => {
                     return response.json();
                 })
                 .then(data => {
-                    Swal.fire({
-                        title: 'Reserva exitosa',
-                        text: 'Su reserva ha sido generada con exito',
-                        icon: 'success',
-                        confirmButtonText: 'OK',
-                        confirmButtonColor: '#F0572D',
-                    })
+                    navigate("/reserva-exitosa");
                 })
             }
         } else {

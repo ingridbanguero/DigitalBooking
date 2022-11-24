@@ -13,6 +13,7 @@ const Search = (props) => {
     const [ciudades, setCiudades] = useState([]);
 
     const handleSelectDate = (dateRange) => {
+        props.onSelectDates(dateRange);
         setOpenCalendar(false);
         setStartDate(`${dateRange[0].getDate()} de ${dateRange[0].toLocaleString('default', { month: 'short' })}.`);
         setEndDate(`${dateRange[1].getDate()} de ${dateRange[1].toLocaleString('default', { month: 'short' })}.`);

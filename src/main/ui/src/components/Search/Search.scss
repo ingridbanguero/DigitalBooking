@@ -54,9 +54,6 @@
             left: 6px;
         }
         
-        
-        
-
         .search-button {
             margin: 4px 0px;
             background-color: var(--primary-color);
@@ -64,7 +61,7 @@
             height: 40px;
             font-size: 14px;
             border-radius: 5px;
-            
+            cursor: pointer;
         }
 
         .select-city {
