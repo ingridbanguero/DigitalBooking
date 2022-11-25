@@ -65,10 +65,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     provider.setUserDetailsService(authService);
     return provider;
   }
-
-  /*@Bean
-  public WebSecurityCustomizer webSecurityCustomizer() {
-    return (web) -> web.ignoring().antMatchers("/usuarios");
-  }*/
-
 }
