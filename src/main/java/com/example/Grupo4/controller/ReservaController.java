@@ -78,5 +78,10 @@ public class ReservaController {
     return ResponseEntity.ok(reservaService.filtrarReservaPorProducto(id));
   }
 
+  @GetMapping("/usuario")
+  public ResponseEntity<Collection<Reserva>> filtrarPorUsuario(@RequestParam Integer id) {
+    return ResponseEntity.ok(reservaService.filtrarReservasPorUsuario(id));
+  }
+
 
 }
