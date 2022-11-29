@@ -38,15 +38,27 @@ public class ReservaService {
     }
 
     public Collection<Reserva> filtrarReservaPorProducto(Integer id){
-        Collection<Reserva> todasLasReservas = reservaRepository.findAll();
-        Collection<Reserva> revervasFiltradas = new ArrayList<>();
+      Collection<Reserva> todasLasReservas = reservaRepository.findAll();
+      Collection<Reserva> revervasFiltradas = new ArrayList<>();
     
-        for (Reserva reserva : todasLasReservas){
-          if(reserva.getProducto().getId().equals(id)){
-            revervasFiltradas.add(reserva);
-          };
-        }    
-        return revervasFiltradas;
-      }
+      for (Reserva reserva : todasLasReservas){
+        if(reserva.getProducto().getId().equals(id)){
+          revervasFiltradas.add(reserva);
+        };
+      }    
+      return revervasFiltradas;
+    }
+
+    public Collection<Reserva> filtrarReservasPorUsuario(Integer id){
+      Collection<Reserva> reservas = reservaRepository.findAll();
+      Collection<Reserva> ReservasFiltradas = new ArrayList<>();
+  
+      for (Reserva Reserva : reservas){
+        if(Reserva.getUsuario().getId().equals(id)){
+          ReservasFiltradas.add(Reserva);
+        };
+      }    
+      return ReservasFiltradas;
+    }
     
 }
