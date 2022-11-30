@@ -44,9 +44,7 @@ public class ReservaController {
   public ResponseEntity<ReservaDTO> consultar(@PathVariable Integer id) {
     if (reservaService.consultarReserva(id).isEmpty()) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    } else {      
-      mapper.registerModule(new Jdk8Module());
-      mapper.registerModule(new JavaTimeModule());
+    } else {
       return ResponseEntity.ok(mapper.convertValue(reservaService.consultarReserva(id), ReservaDTO.class));
     }
   }
@@ -77,7 +75,7 @@ public class ReservaController {
 
   @GetMapping("/producto")
   public ResponseEntity<ReservaDTO[]> filtrarPorProducto(@RequestParam Integer id) {
-    return ResponseEntity.ok(mapper.convertValue(reservaService.filtrarReservaPorProducto(id),ReservaDTO[].class ));
+    return ResponseEntity.ok(mapper.convertValue(reservaService.filtrarReservaPorProducto(id), ReservaDTO[].class));
   }
 
   @GetMapping("/usuario")
