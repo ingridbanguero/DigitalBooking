@@ -367,13 +367,14 @@
       "id": "b67d418c-b47a-403e-864d-cf3e6315874b",
       "comment": "",
       "command": "assertText",
-      "target": "css=.menu-login",
+      "target": "css=.text1:nth-child(3)",
       "targets": [
-        ["css=.menu-login", "css:finder"],
-        ["xpath=//div[@id='root']/div/div/nav/ul", "xpath:idRelative"],
-        ["xpath=//ul", "xpath:position"]
+        ["css=.text1:nth-child(3)", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/nav/ul/li/div/p[2]", "xpath:idRelative"],
+        ["xpath=//p[2]", "xpath:position"],
+        ["xpath=//p[contains(.,'Pepito Perez')]", "xpath:innerText"]
       ],
-      "value": "BR\\nHola,\\nBruno Rodriguez"
+      "value": "Pepito Perez"
     }]
   }],
   "suites": [{
