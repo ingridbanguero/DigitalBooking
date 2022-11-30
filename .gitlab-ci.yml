@@ -7,7 +7,7 @@ stages:
 
 backendbuild:
     stage: backendbuild
-    image:  maven:3.6.3-jdk-17-slim
+    image:  maven:3.8.6-openjdk-18-slim
     script:
         - echo "Building app..."
         - mvn clean package
