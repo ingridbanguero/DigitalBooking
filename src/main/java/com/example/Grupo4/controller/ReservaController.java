@@ -6,7 +6,6 @@ import com.example.Grupo4.service.ReservaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import java.util.Collection;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,9 +26,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReservaController {
 
   private final ReservaService reservaService;
+  private final ObjectMapper mapper;
 
-  public ReservaController(ReservaService reservaService) {
+  public ReservaController(ReservaService reservaService, ObjectMapper mapper) {
     this.reservaService = reservaService;
+    this.mapper = mapper;
+    mapper.registerModule(new Jdk8Module());
+    mapper.registerModule(new JavaTimeModule());
   }
 
   @PostMapping
@@ -41,8 +44,7 @@ public class ReservaController {
   public ResponseEntity<ReservaDTO> consultar(@PathVariable Integer id) {
     if (reservaService.consultarReserva(id).isEmpty()) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    } else {
-      ObjectMapper mapper = new ObjectMapper();
+    } else {      
       mapper.registerModule(new Jdk8Module());
       mapper.registerModule(new JavaTimeModule());
       return ResponseEntity.ok(mapper.convertValue(reservaService.consultarReserva(id), ReservaDTO.class));
@@ -50,8 +52,8 @@ public class ReservaController {
   }
 
   @GetMapping
-  public ResponseEntity<Collection<Reserva>> consultarTodas() {
-    return ResponseEntity.ok(reservaService.consultarTodasLasReservaes());
+  public ResponseEntity<ReservaDTO[]> consultarTodas() {
+    return ResponseEntity.ok(mapper.convertValue(reservaService.consultarTodasLasReservaes(), ReservaDTO[].class));
   }
 
   @PutMapping
@@ -74,13 +76,13 @@ public class ReservaController {
   }
 
   @GetMapping("/producto")
-  public ResponseEntity<Collection<Reserva>> filtrarPorProducto(@RequestParam Integer id) {
-    return ResponseEntity.ok(reservaService.filtrarReservaPorProducto(id));
+  public ResponseEntity<ReservaDTO[]> filtrarPorProducto(@RequestParam Integer id) {
+    return ResponseEntity.ok(mapper.convertValue(reservaService.filtrarReservaPorProducto(id),ReservaDTO[].class ));
   }
 
   @GetMapping("/usuario")
-  public ResponseEntity<Collection<Reserva>> filtrarPorUsuario(@RequestParam Integer id) {
-    return ResponseEntity.ok(reservaService.filtrarReservasPorUsuario(id));
+  public ResponseEntity<ReservaDTO[]> filtrarPorUsuario(@RequestParam Integer id) {
+    return ResponseEntity.ok(mapper.convertValue(reservaService.filtrarReservasPorUsuario(id), ReservaDTO[].class));
   }
 
 
