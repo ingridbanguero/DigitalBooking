@@ -8,6 +8,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -17,6 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   private final AuthService authService;
@@ -42,10 +44,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     http
         .authorizeRequests()
         .antMatchers(HttpMethod.GET, "/**").permitAll()
+        .antMatchers(HttpMethod.POST, "/usuarios/**").permitAll()
+        .antMatchers(HttpMethod.POST, "/reservas", "/productos", "/categorias", "/ciudades").authenticated()
         .antMatchers(HttpMethod.PUT, "/**").authenticated()
         .antMatchers(HttpMethod.DELETE, "/**").authenticated()
-        .antMatchers(HttpMethod.POST, "/usuarios/**", "/productos", "/ciudades", "/categorias").permitAll()
-        .antMatchers(HttpMethod.POST, "/reservas").authenticated()
         .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and().csrf().disable();
 
