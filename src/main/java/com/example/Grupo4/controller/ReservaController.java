@@ -8,6 +8,7 @@ import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,6 +56,7 @@ public class ReservaController {
   }
 
   @PutMapping
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<Reserva> modificar(@RequestBody Reserva reserva) {
     if (reservaService.consultarReserva(reserva.getId()).isEmpty()) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -64,6 +66,7 @@ public class ReservaController {
   }
 
   @DeleteMapping("/{id}")
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<Reserva> eliminar(@PathVariable Integer id) {
     if (reservaService.consultarReserva(id).isEmpty()) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);

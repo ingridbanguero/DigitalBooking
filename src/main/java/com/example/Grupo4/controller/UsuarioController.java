@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -83,6 +84,7 @@ public class UsuarioController {
   }
 
   @PutMapping
+  @PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
   public ResponseEntity<Usuario> modificar(@RequestBody Usuario usuario) {
     if (service.consultarUsuario(usuario.getId()).isEmpty()) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -92,6 +94,7 @@ public class UsuarioController {
   }
 
   @DeleteMapping("/{id}")
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<?> eliminar(@PathVariable Integer id) {
     if (service.consultarUsuario(id).isEmpty()) {
       return new ResponseEntity<>("El usuario no existe.", HttpStatus.NOT_FOUND);
