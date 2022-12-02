@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -44,6 +45,10 @@ public class Producto {
   @ManyToMany(cascade = CascadeType.MERGE)
   @JoinColumn(name = "caracteristica_id")
   private List<Caracteristica> caracteristicas;
+
+  @OneToOne(cascade = CascadeType.PERSIST)
+  @JoinColumn(name = "politica_id")
+  private Politica politica;
 
   @ManyToOne(cascade = CascadeType.MERGE)
   @JoinColumn(name = "categoria_id")
