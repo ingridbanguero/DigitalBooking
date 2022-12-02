@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -63,6 +64,17 @@ public class ProductoController {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     } else {
       return ResponseEntity.ok(service.modificarProducto(producto));
+    }
+  }
+
+  @DeleteMapping("/{id}")
+  @PreAuthorize("hasRole('ADMIN')")
+  public ResponseEntity<Producto> eliminar(@PathVariable Integer id) {
+    if (service.consultarProducto(id).isEmpty()) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    } else {
+      service.eliminarProducto(id);
+      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
   }
 }
