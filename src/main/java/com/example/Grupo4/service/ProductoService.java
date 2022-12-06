@@ -4,6 +4,7 @@ import com.example.Grupo4.model.Producto;
 import com.example.Grupo4.model.Reserva;
 import com.example.Grupo4.repository.IProductoRepository;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -54,10 +55,20 @@ public class ProductoService {
     repository.deleteById(id);
   }
 
-  public Collection<Producto> filtrarPorFechasYCiudad(Integer idCiudad, LocalDate fechaInicio, LocalDate fechaFinal){
+  public Collection<Producto> filtrarPorFechasYCiudad(Integer idCiudad, LocalDate fechaInicio, LocalDate fechaFinal) throws IOException{
     Collection<Producto> productosPorCiudad = this.filtrarProductosPorCiudad(idCiudad);
     Collection<Reserva> reservasPorFechas = reservaService.filtrarReservasPorFechas(fechaInicio, fechaFinal);    
     Collection<Producto> productosFiltrados = new ArrayList<>();
+
+    boolean fechasEnOrden = fechaFinal.isAfter(fechaInicio);
+    if(!fechasEnOrden){
+      throw new IOException("La fecha final es anterior a la fecha de inicio");
+    }
+
+    boolean fechaPasada = LocalDate.now().isAfter(fechaInicio);
+    if(fechaPasada){
+      throw new IOException("La fecha de inicio ya pasó.");
+    }
 
     for(Producto producto: productosPorCiudad){
       for(Reserva reserva: reservasPorFechas){
