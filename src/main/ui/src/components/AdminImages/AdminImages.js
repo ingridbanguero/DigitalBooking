@@ -3,7 +3,7 @@ import imageAdd from "../../img/add.svg"
 import imageRemove from "../../img/remove.svg"
 import { useState } from 'react';
 
-const AdminImages = () => {
+const AdminImages = (props) => {
     const [newUrl, setNewUrl] = useState("");
     const [urls, setUrls] = useState([]);
     const [urlError, setUrlError] = useState(false);
@@ -13,15 +13,16 @@ const AdminImages = () => {
         console.log(isValidUrl(newUrl));
         if(isValidUrl(newUrl)){
             setUrls([ newUrl, ...urls])
+            props.onSelectImagenes([ newUrl, ...urls]);
             setNewUrl("");
         }else{
             setUrlError(true);
         }
-        
     }
 
     const handleRemoveUrl = (e) => {
         e.preventDefault();
+        setUrls(urls.filter(item => item !== e.target.name))
     }
 
     const isValidUrl = urlString => {
@@ -50,9 +51,9 @@ const AdminImages = () => {
             
             {
                 urls.map((url, index) => {
-                    return <div>
+                    return <div key={index}>
                         <input type="text" placeholder='Insertar https://' value={url} disabled/>
-                        <button onClick={handleRemoveUrl}><img src={imageRemove} alt="removeImage"/></button>
+                        <button onClick={handleRemoveUrl}><img src={imageRemove} name={url} value={url} alt="removeImage"/></button>
                     </div>
                 })
             }
