@@ -1,11 +1,17 @@
-import { useState } from 'react';
 import './AdminPolicies.scss';
-// import React, { useState} from 'react';
 
-const AdminPolicies = () => {
-    const [normas, setNormas] = useState("");
-    const [saludSeguridad, setSaludSeguridad] = useState(""); 
-    const [cancelacion, setCancelacion] = useState("");
+const AdminPolicies = (props) => {
+    const handleSelectNormas = (e) => {
+        props.onSelectNormas((e.target.value).replace(/(\r\n|\n|\r)/gm, ";"));
+    }
+
+    const handleSelectSaludSeguridad = (e) => {
+        props.onSelectSaludSeguridad((e.target.value).replace(/(\r\n|\n|\r)/gm, ";"))
+    }
+
+    const handleSelectCancelacion = (e) => {
+        props.onSelectCancelacion((e.target.value).replace(/(\r\n|\n|\r)/gm, ";"))
+    }
 
     return(
         <div className="admin-policies">
@@ -14,17 +20,17 @@ const AdminPolicies = () => {
                 <div>
                     <h3>Normas de la casa</h3>
                     <p>Descripción</p>
-                    <textarea placeholder='Escriba aquí' onChange={e => { setNormas((e.target.value).replace(/(\r\n|\n|\r)/gm, ";"))}}></textarea>
+                    <textarea placeholder='Escriba aquí' onChange={handleSelectNormas}></textarea>
                 </div>
                 <div>
                     <h3>Salud y seguridad</h3>
                     <p>Descripción</p>
-                    <textarea placeholder='Escriba aquí' onChange={e => setSaludSeguridad((e.target.value).replace(/(\r\n|\n|\r)/gm, ";"))}></textarea>
+                    <textarea placeholder='Escriba aquí' onChange={handleSelectSaludSeguridad}></textarea>
                 </div>
                 <div>
                     <h3>Política de cancelación</h3>
                     <p>Descripción</p>
-                    <textarea placeholder='Escriba aquí' onChange={e => setCancelacion((e.target.value).replace(/(\r\n|\n|\r)/gm, ";"))}></textarea>
+                    <textarea placeholder='Escriba aquí' onChange={handleSelectCancelacion}></textarea>
                 </div>
             </div>
         </div>

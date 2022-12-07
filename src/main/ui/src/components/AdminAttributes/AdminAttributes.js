@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import baseUrl from "../../helpers/api";
 import './AdminAttributes.scss';
 
-const AdminAttributes = () => {
+const AdminAttributes = (props) => {
     const [features, setFeatures] = useState([]);
     const [checkFeatures, setCheckFeatures] = useState([]);
 
@@ -18,16 +18,13 @@ const AdminAttributes = () => {
             }
         }, []
     )
-
-    useEffect(() => {
-        console.log("checkedItems: ", checkFeatures);
-    }, [checkFeatures]);  
-
     const handleChange = (e) => {
         if(e.target.checked){
             setCheckFeatures([...checkFeatures, Number(e.target.name) ]);
+            props.onSelectAtributos([...checkFeatures, Number(e.target.name) ])
         }else{
             setCheckFeatures(checkFeatures.filter(item => item !== Number(e.target.name)))
+            props.onSelectAtributos(checkFeatures.filter(item => item !== Number(e.target.name)))
         }
     }
 
@@ -38,7 +35,7 @@ const AdminAttributes = () => {
                 {
                     features.map((feature, index) => {
                         return(
-                        <div>
+                        <div key={index}>
                             <input type="checkbox" name={feature.id} className='custom-checkbox' onChange={handleChange}></input>
                             <span><i className={feature.icono}></i></span>
                             <label>{feature.nombre}</label>
@@ -46,8 +43,6 @@ const AdminAttributes = () => {
                         )
                     })
                 }
-               
-                
             </div>
         </div>
     )

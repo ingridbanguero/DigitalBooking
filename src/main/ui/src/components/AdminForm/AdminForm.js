@@ -2,14 +2,13 @@ import './AdminForm.scss';
 import React, { useState, useEffect} from 'react';
 import baseUrl from "../../helpers/api";
 
-const AdminForm = () => {
+const AdminForm = (props) => {
     const [categories, setCategories] = useState([]);
     const [ciudades, setCiudades] = useState([]);
     const [selectCity, setSelectCity] = useState({});
     const [selectCategory, setSelectCategory] = useState({});
     const [openCity, setOpenCity] = useState(false);
     const [openCategory, setOpenCategory] = useState(false);
-
 
     // Obtener categorias
     useEffect(
@@ -36,12 +35,36 @@ const AdminForm = () => {
         }, []
     )
 
+    const handleSelectNombre = (e) => {
+        props.onSelectNombre(e.target.value);
+    }
+
+    const handleSelectCategoria = (category) => {
+        setSelectCategory(category);
+        setOpenCategory(false); 
+        props.onSelectCategoria(category.id);
+    }
+
+    const handleSelectDireccion = (e) => {
+        props.onSelectDireccion(e.target.value);
+    }
+
+    const handleSelectCiudad = (ciudad) => {
+        setSelectCity(ciudad); 
+        setOpenCity(false)
+        props.onSelectCiudad(ciudad.id);
+    }
+
+    const handleSelectDescripcion = (e) => {
+        props.onSelectDescripcion(e.target.value);
+    }
+ 
     return(
         <div className='admin-form'>
             <div className="info">
                 <div>
                     <label>Nombre de la propiedad</label>
-                    <input type="text" placeholder="Nombre"/>
+                    <input type="text" placeholder="Nombre" onChange={handleSelectNombre}/>
                 </div>
                 <div>
                     <label>Categoría</label>
@@ -56,10 +79,10 @@ const AdminForm = () => {
                     {
                         openCategory && 
                         <div className='custom-select'>
-                        { categories.map((categoria, index) => {
+                        { categories.map((category, index) => {
                             return(
-                            <div className='custom-option' key={index} onClick={() => {setSelectCategory(categoria); setOpenCategory(false)}}>
-                                <p>{categoria.titulo}</p>
+                            <div className='custom-option' key={index} onClick={() => {handleSelectCategoria(category)}}>
+                                <p>{category.titulo}</p>
                             </div>)
                         })}
                     </div>
@@ -69,7 +92,7 @@ const AdminForm = () => {
                 </div>
                 <div>
                     <label>Dirección</label>
-                    <input type="text" placeholder="Dirección"/>
+                    <input type="text" placeholder="Dirección" onChange={handleSelectDireccion}/>
                 </div>
                     
                 <div>
@@ -86,7 +109,7 @@ const AdminForm = () => {
                         <div className='custom-select'>
                         { ciudades.map((ciudad, index) => {
                             return(
-                            <div className='custom-option' key={index} onClick={() => {setSelectCity(ciudad); console.log(ciudad);setOpenCity(false)}}>
+                            <div className='custom-option' key={index} onClick={() => handleSelectCiudad(ciudad)}>
                                 <p>{ciudad.nombre}, {ciudad.pais}</p>
                             </div>)
                         })}
@@ -96,7 +119,7 @@ const AdminForm = () => {
                 </div>
                 <div>
                     <label>Descripción</label>
-                    <textarea placeholder="Escribe aquí"></textarea>
+                    <textarea placeholder="Escribe aquí" onChange={handleSelectDescripcion}></textarea>
                 </div>
             </div>
         </div>
