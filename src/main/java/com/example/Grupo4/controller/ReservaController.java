@@ -1,6 +1,7 @@
 package com.example.Grupo4.controller;
 
 import com.example.Grupo4.dto.ReservaDTO;
+import com.example.Grupo4.exception.ApiException;
 import com.example.Grupo4.model.Reserva;
 import com.example.Grupo4.service.ReservaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReservaController {
 
   private final ReservaService reservaService;
+
   private final ObjectMapper mapper;
 
   public ReservaController(ReservaService reservaService, ObjectMapper mapper) {
@@ -44,7 +46,7 @@ public class ReservaController {
   @GetMapping("/{id}")
   public ResponseEntity<ReservaDTO> consultar(@PathVariable Integer id) {
     if (reservaService.consultarReserva(id).isEmpty()) {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      throw new ApiException("reservations_error", "La reserva no existe", 404);
     } else {
       return ResponseEntity.ok(mapper.convertValue(reservaService.consultarReserva(id), ReservaDTO.class));
     }
@@ -59,7 +61,7 @@ public class ReservaController {
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<Reserva> modificar(@RequestBody Reserva reserva) {
     if (reservaService.consultarReserva(reserva.getId()).isEmpty()) {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      throw new ApiException("reservations_error", "La reserva no existe", 404);
     } else {
       return ResponseEntity.ok(reservaService.modificarReserva(reserva));
     }
@@ -67,12 +69,12 @@ public class ReservaController {
 
   @DeleteMapping("/{id}")
   @PreAuthorize("hasRole('ADMIN')")
-  public ResponseEntity<Reserva> eliminar(@PathVariable Integer id) {
+  public ResponseEntity<?> eliminar(@PathVariable Integer id) {
     if (reservaService.consultarReserva(id).isEmpty()) {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      throw new ApiException("reservations_error", "La reserva no existe", 404);
     } else {
       reservaService.eliminarReserva(id);
-      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+      return new ResponseEntity<>("Reserva eliminado correctamente", HttpStatus.NO_CONTENT);
     }
   }
 
@@ -85,6 +87,4 @@ public class ReservaController {
   public ResponseEntity<ReservaDTO[]> filtrarPorUsuario(@RequestParam Integer id) {
     return ResponseEntity.ok(mapper.convertValue(reservaService.filtrarReservasPorUsuario(id), ReservaDTO[].class));
   }
-
-
 }
