@@ -3,6 +3,7 @@ package com.example.Grupo4.controller;
 import com.example.Grupo4.dto.AuthRequestDTO;
 import com.example.Grupo4.dto.AuthResponseDTO;
 import com.example.Grupo4.dto.UsuarioDTO;
+import com.example.Grupo4.exception.ApiException;
 import com.example.Grupo4.model.Usuario;
 import com.example.Grupo4.service.UsuarioService;
 import com.example.Grupo4.util.JwtUtil;
@@ -53,7 +54,7 @@ public class UsuarioController {
     try {
       return new ResponseEntity<>(service.crearUsuario(usuario), HttpStatus.CREATED);
     } catch (Exception e) {
-      return ResponseEntity.badRequest().body("El email ya se encuentra registrado");
+      throw new ApiException("sign_up_error", "El email ya se encuentra registrado o el rol no existe", 400);
     }
   }
 
@@ -63,7 +64,7 @@ public class UsuarioController {
       authenticationManager.authenticate(
           new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getContrasenna()));
     } catch (BadCredentialsException e) {
-      throw new Exception("Credenciales inválidas");
+      throw new ApiException("login_error", "Credenciales inválidas", 400);
     }
     final UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getEmail());
     final String token = jwtUtil.generateToken(userDetails);
@@ -77,7 +78,7 @@ public class UsuarioController {
   @GetMapping("/{id}")
   public ResponseEntity<Optional<Usuario>> consultar(@PathVariable Integer id) {
     if (service.consultarUsuario(id).isEmpty()) {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      throw new ApiException("users_error", "El usuario no existe", 404);
     } else {
       return ResponseEntity.ok(service.consultarUsuario(id));
     }
@@ -87,7 +88,7 @@ public class UsuarioController {
   @PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
   public ResponseEntity<Usuario> modificar(@RequestBody Usuario usuario) {
     if (service.consultarUsuario(usuario.getId()).isEmpty()) {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      throw new ApiException("users_error", "El usuario no existe", 404);
     } else {
       return ResponseEntity.ok(service.modificarUsuario(usuario));
     }
@@ -97,7 +98,7 @@ public class UsuarioController {
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<?> eliminar(@PathVariable Integer id) {
     if (service.consultarUsuario(id).isEmpty()) {
-      return new ResponseEntity<>("El usuario no existe.", HttpStatus.NOT_FOUND);
+      throw new ApiException("users_error", "El usuario no existe", 404);
     } else {
       service.eliminarUsuario(id);
       return new ResponseEntity<>("Usuario eliminado correctamente.", HttpStatus.NO_CONTENT);

@@ -1,5 +1,6 @@
 package com.example.Grupo4.controller;
 
+import com.example.Grupo4.exception.ApiException;
 import com.example.Grupo4.model.Categoria;
 import com.example.Grupo4.service.CategoriaService;
 import java.util.Collection;
@@ -38,7 +39,7 @@ public class CategoriaController {
   @GetMapping("/{id}")
   public ResponseEntity<Optional<Categoria>> consultar(@PathVariable Integer id) {
     if (service.consultarCategoria(id).isEmpty()) {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      throw new ApiException("categories_error", "La categoría no existe", 404);
     } else {
       return ResponseEntity.ok(service.consultarCategoria(id));
     }
@@ -53,7 +54,7 @@ public class CategoriaController {
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<Categoria> modificar(@RequestBody Categoria categoria) {
     if (service.consultarCategoria(categoria.getId()).isEmpty()) {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      throw new ApiException("categories_error", "La categoría no existe", 404);
     } else {
       return ResponseEntity.ok(service.modificarCategoria(categoria));
     }
@@ -61,12 +62,12 @@ public class CategoriaController {
 
   @DeleteMapping("/{id}")
   @PreAuthorize("hasRole('ADMIN')")
-  public ResponseEntity<Categoria> eliminar(@PathVariable Integer id) {
+  public ResponseEntity<?> eliminar(@PathVariable Integer id) {
     if (service.consultarCategoria(id).isEmpty()) {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      throw new ApiException("categories_error", "La categoría no existe", 404);
     } else {
       service.eliminarCategoria(id);
-      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+      return new ResponseEntity<>("Categoría eliminada correctamente", HttpStatus.NO_CONTENT);
     }
   }
 }
