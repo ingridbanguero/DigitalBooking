@@ -27,12 +27,7 @@ public class ControllerExceptionHandler {
   @ExceptionHandler(Exception.class)
   protected ResponseEntity<ApiErrorDTO> handleUnknownException(Exception e) {
     log.error("Error interno", e);
-
-    ApiErrorDTO apiError = new ApiErrorDTO(
-        "internal_error",
-        "Internal server error",
-        HttpStatus.INTERNAL_SERVER_ERROR.value());
-
+    ApiErrorDTO apiError = new ApiErrorDTO("internal_error", e.getMessage(), 500);
     return ResponseEntity.status(apiError.getStatus()).body(apiError);
   }
 }
