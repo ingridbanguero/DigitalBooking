@@ -20,28 +20,8 @@ const CardListContainer = (props) => {
                     if(!user.auth){
                         elements = elements.sort(() => Math.random() - 0.5); // Aleatorio
                     }
-                    fetch(`${baseUrl}/reservas`)
-                    .then(response => response.json())
-                    .then(reservas => {
-                        reservas.forEach(reserva => {
-                            elements.forEach(product => {
-                                if(reserva.producto.id === product.id){
-                                    let datesToDisabled = []
-                                    let startDate = reserva.fechaInicio.split('-');
-                                    startDate = new Date(startDate[0], startDate[1] - 1, startDate[2]);
-                                    let endDate = reserva.fechaFinal.split('-');
-                                    endDate = new Date(endDate[0], endDate[1] - 1, endDate[2]);
-                                    while(endDate.getTime() >= startDate.getTime()){
-                                        startDate.setDate(startDate.getDate() + 1);
-                                        datesToDisabled.push(Date.parse(startDate));
-                                    }
-                                    product.disabledFechas = [...datesToDisabled];
-                                }
-                            })
-                        })
-                        setProducts(elements);
-                        setFilterProducts(elements); 
-                    })    
+                    setProducts(elements);
+                    setFilterProducts(elements); 
                 })
             } catch(e){
                 console.log(e);
