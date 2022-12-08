@@ -1,5 +1,6 @@
 package com.example.Grupo4.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
@@ -16,6 +17,11 @@ public class ReservaService {
     public ReservaService(IReservaRepository reservaRepository) {
       this.reservaRepository = reservaRepository;
     }
+
+    public Collection<Reserva> filtrarReservasPorFechas(LocalDate fechaInicio, LocalDate fechaFinal){
+      return reservaRepository.entreFechas(fechaInicio, fechaFinal);
+    }
+
   
     public Reserva crearReserva(Reserva reserva){
       return reservaRepository.save(reserva);
