@@ -38,7 +38,7 @@ public class Producto {
   @Column(columnDefinition = "LONGTEXT")
   private String descripcion;
 
-  @OneToMany(cascade = CascadeType.MERGE)
+  @OneToMany(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "producto_id")
   private List<Imagen> imagenes;
 

@@ -1,5 +1,6 @@
 package com.example.Grupo4.controller;
 
+import com.example.Grupo4.exception.ApiException;
 import com.example.Grupo4.model.Ciudad;
 import com.example.Grupo4.service.CiudadService;
 import java.util.Collection;
@@ -38,7 +39,7 @@ public class CiudadController {
   @GetMapping("/{id}")
   public ResponseEntity<Optional<Ciudad>> consultar(@PathVariable Integer id) {
     if (ciudadService.consultarCiudad(id).isEmpty()) {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      throw new ApiException("cities_error", "La ciudad no existe", 404);
     } else {
       return ResponseEntity.ok(ciudadService.consultarCiudad(id));
     }
@@ -51,22 +52,22 @@ public class CiudadController {
 
   @PutMapping
   @PreAuthorize("hasRole('ADMIN')")
-  public ResponseEntity<Ciudad> modificar(@RequestBody Ciudad odontologo) {
-    if (ciudadService.consultarCiudad(odontologo.getId()).isEmpty()) {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+  public ResponseEntity<Ciudad> modificar(@RequestBody Ciudad ciudad) {
+    if (ciudadService.consultarCiudad(ciudad.getId()).isEmpty()) {
+      throw new ApiException("cities_error", "La ciudad no existe", 404);
     } else {
-      return ResponseEntity.ok(ciudadService.modificarCiudad(odontologo));
+      return ResponseEntity.ok(ciudadService.modificarCiudad(ciudad));
     }
   }
 
   @DeleteMapping("/{id}")
   @PreAuthorize("hasRole('ADMIN')")
-  public ResponseEntity<Ciudad> eliminar(@PathVariable Integer id) {
+  public ResponseEntity<?> eliminar(@PathVariable Integer id) {
     if (ciudadService.consultarCiudad(id).isEmpty()) {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      throw new ApiException("cities_error", "La ciudad no existe", 404);
     } else {
       ciudadService.eliminarCiudad(id);
-      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+      return new ResponseEntity<>("Ciudad eliminada correctamente", HttpStatus.NO_CONTENT);
     }
   }
 

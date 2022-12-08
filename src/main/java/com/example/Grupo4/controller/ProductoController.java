@@ -1,5 +1,6 @@
 package com.example.Grupo4.controller;
 
+import com.example.Grupo4.exception.ApiException;
 import com.example.Grupo4.model.Producto;
 import com.example.Grupo4.service.ProductoService;
 
@@ -51,7 +52,7 @@ public class ProductoController {
   @GetMapping("/{id}")
   public ResponseEntity<Optional<Producto>> consultar(@PathVariable Integer id) {
     if (service.consultarProducto(id).isEmpty()) {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      throw new ApiException("products_error", "El producto no existe", 404);
     } else {
       return ResponseEntity.ok(service.consultarProducto(id));
     }
@@ -66,7 +67,7 @@ public class ProductoController {
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<Producto> modificar(@RequestBody Producto producto) {
     if (service.consultarProducto(producto.getId()).isEmpty()) {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      throw new ApiException("products_error", "El producto no existe", 404);
     } else {
       return ResponseEntity.ok(service.modificarProducto(producto));
     }
@@ -74,12 +75,12 @@ public class ProductoController {
 
   @DeleteMapping("/{id}")
   @PreAuthorize("hasRole('ADMIN')")
-  public ResponseEntity<Producto> eliminar(@PathVariable Integer id) {
+  public ResponseEntity<?> eliminar(@PathVariable Integer id) {
     if (service.consultarProducto(id).isEmpty()) {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      throw new ApiException("products_error", "El producto no existe", 404);
     } else {
       service.eliminarProducto(id);
-      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+      return new ResponseEntity<>("Producto eliminado correctamente", HttpStatus.NO_CONTENT);
     }
   }
 
