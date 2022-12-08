@@ -23,7 +23,6 @@ const FormLogin = () => {
     )
    
     const onSubmit = evento => {
-        console.log(evento);
         // Obtener token y datos del usuario
         fetch(`${baseUrl}/usuarios/auth`, {
             method: "POST",
@@ -44,9 +43,9 @@ const FormLogin = () => {
                 apellido: data.usuario.apellido,
                 email: data.usuario.email,
                 ciudad: data.usuario.ciudad,
-                token: data.jwt
+                token: data.jwt,
+                rol: data.usuario.rol
             }
-            console.log(data);
             // Loguear usuario
             login(data);
 
