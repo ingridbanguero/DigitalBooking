@@ -37,7 +37,6 @@ const Reserva = () => {
         setHour(hour);
     }
 
-
     // Formato AAAA-MM-DD
     const formatDate = (date) => {
         date = date.split('/').reverse().join("-");

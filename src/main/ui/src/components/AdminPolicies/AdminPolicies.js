@@ -33,6 +33,13 @@ const AdminPolicies = (props) => {
                     <textarea placeholder='Escriba aquí' onChange={handleSelectCancelacion}></textarea>
                 </div>
             </div>
+            {
+                props.errorPoliticas &&
+                <div className="error">
+                    <p>{props.errorPoliticas}</p>
+                </div>
+            }
+            
         </div>
     )
 }

@@ -21,11 +21,10 @@ const ProductReservation = () => {
                     data.forEach(reserva => {
                         let fechaInicio = createDate(reserva.fechaInicio);
                         let fechaFin = createDate(reserva.fechaFinal);
-                        // Agregar fechas intermedias
-                        while(fechaFin.getTime() >= fechaInicio.getTime()){
-                            fechaInicio.setDate(fechaInicio.getDate() + 1);
-                            datesToDisabled.push(Date.parse(fechaInicio));
-                        }
+                        datesToDisabled.push({
+                            "start": fechaInicio,
+                            "end": fechaFin
+                        })
                     })
                     setDisabledDates(datesToDisabled);
                 })

@@ -26,7 +26,7 @@ const AdminAttributes = (props) => {
             setCheckFeatures(checkFeatures.filter(item => item !== Number(e.target.name)))
             props.onSelectAtributos(checkFeatures.filter(item => item !== Number(e.target.name)))
         }
-    }
+    }   
 
     return(
         <div className="admin-attributes">
@@ -44,6 +44,12 @@ const AdminAttributes = (props) => {
                     })
                 }
             </div>
+            {
+                props.errorAtributos &&
+                <div className="error">
+                    <p>{props.errorAtributos}</p>
+                </div>
+            }
         </div>
     )
 }

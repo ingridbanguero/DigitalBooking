@@ -10,11 +10,11 @@ const AdminImages = (props) => {
 
     const handleAddUrl = (e) => {
         e.preventDefault();
-        console.log(isValidUrl(newUrl));
         if(isValidUrl(newUrl)){
             setUrls([ newUrl, ...urls])
             props.onSelectImagenes([ newUrl, ...urls]);
             setNewUrl("");
+            setUrlError(false);
         }else{
             setUrlError(true);
         }
@@ -48,7 +48,6 @@ const AdminImages = (props) => {
                     <p>Por favor introduzca una url válida</p>
                 </div>
             }
-            
             {
                 urls.map((url, index) => {
                     return <div key={index}>
@@ -56,6 +55,12 @@ const AdminImages = (props) => {
                         <button onClick={handleRemoveUrl}><img src={imageRemove} name={url} value={url} alt="removeImage"/></button>
                     </div>
                 })
+            }
+            {
+                props.errorImagenes && 
+                <div className="error">
+                    <p>{props.errorImagenes}</p>
+                </div>
             }
         </div>
     )

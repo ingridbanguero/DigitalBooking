@@ -122,6 +122,12 @@ const AdminForm = (props) => {
                     <textarea placeholder="Escribe aquí" onChange={handleSelectDescripcion}></textarea>
                 </div>
             </div>
+            {
+                
+                <div className="error">
+                    <p>{props.errorInfo}</p>
+                </div>
+            }
         </div>
     )
 }
