@@ -1,5 +1,6 @@
 package com.example.Grupo4.dto;
 
+import com.example.Grupo4.model.Rol;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,4 +23,6 @@ public class UsuarioDTO {
   private String email;
 
   private String ciudad;
+
+  private Rol rol;
 }
