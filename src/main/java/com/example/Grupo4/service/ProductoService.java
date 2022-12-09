@@ -81,5 +81,31 @@ public class ProductoService {
     return productosPorCiudad;
   }
 
+  public Collection<Producto> filtrarPorFechas(LocalDate fechaInicio, LocalDate fechaFinal) throws IOException{
+    Collection<Producto> todosLosProductos = this.consultarTodosLosProductos();
+    Collection<Reserva> reservasPorFechas = reservaService.filtrarReservasPorFechas(fechaInicio, fechaFinal);    
+    Collection<Producto> productosFiltrados = new ArrayList<>();
+
+    boolean fechasEnOrden = fechaFinal.isAfter(fechaInicio);
+    if(!fechasEnOrden){
+      throw new IOException("La fecha final es anterior a la fecha de inicio");
+    }
+
+    boolean fechaPasada = LocalDate.now().isAfter(fechaInicio);
+    if(fechaPasada){
+      throw new IOException("La fecha de inicio ya pasó.");
+    }
+
+    for(Producto producto: todosLosProductos){
+      for(Reserva reserva: reservasPorFechas){
+        if(producto.getId().equals(reserva.getProducto().getId())){          
+          productosFiltrados.add(producto);                    
+        }
+      }
+    }
+    todosLosProductos.removeAll(productosFiltrados);
+    return todosLosProductos;
+  }
+
 
 }

@@ -92,7 +92,14 @@ public class ProductoController {
     return ResponseEntity.ok(service.filtrarPorFechasYCiudad(idCiudad, fechaInicial, fechaFinal));
   
     
-    }
+  }
+
+  @GetMapping("/fechas")
+    public ResponseEntity<Object> buscarPorFechas(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaInicial, 
+                                                  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFinal) throws IOException {
+    
+    return ResponseEntity.ok(service.filtrarPorFechas(fechaInicial, fechaFinal));
+  }
 
 
 }
