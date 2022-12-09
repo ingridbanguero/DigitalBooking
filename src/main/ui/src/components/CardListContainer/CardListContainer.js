@@ -52,15 +52,28 @@ const CardListContainer = (props) => {
                 }
             }
 
-            const filterDates = () => {
-                let productsFilterDates = products.filter((product) => {
-                    if(product.disabledFechas){
-                        return !product.disabledFechas.includes(Date.parse(props.filterDates[0])) && !product.disabledFechas.includes(Date.parse(props.filterDates[1]))
-                    }else {
-                        return true;
+            const filterDates = (startDate, endDate) => {
+                fetch(`${baseUrl}/productos/fechas?fechaInicial=${startDate}&fechaFinal=${endDate}`)
+                .then(response => response.json())
+                .then(data => {
+                    if(props.filterCategory > 0){
+                        filterCategory(data);
+                    } else {
+                        setFilterProducts(data);
                     }
                 })
-                setFilterProducts(productsFilterDates);
+            }
+
+            const filterCityAndDates = (idCiudad, startDate, endDate) => {
+                fetch(`${baseUrl}/productos/ciudadyfechas?idCiudad=${idCiudad}&fechaInicial=${startDate}&fechaFinal=${endDate}`)
+                .then(response => response.json())
+                .then(data => {
+                    if(props.filterCategory > 0){
+                        filterCategory(data);
+                    } else {
+                        setFilterProducts(data);
+                    }
+                })
             }
             
             // Si solo se selecciona categoria
@@ -68,19 +81,32 @@ const CardListContainer = (props) => {
                 filterCategory(products);
             }
 
-            // Al seleccionar ciudad
+            // Al seleccionar solo ciudad
             if(props.filterCity > 0 && props.filterDates.length === 0){
                 filterCity();
             }
 
-            // Al seleccionar fecha
-            if(props.filterDates.length > 0){
-                filterDates();
+            // Al seleccionar solo fecha
+            if(props.filterDates.length > 0 && props.filterCity === 0){
+                filterDates(formatDate(props.filterDates[0]), formatDate(props.filterDates[1]))
+            }
+
+            // Al seleccionar fecha & ciudad
+            if(props.filterDates.length > 0 && props.filterCity > 0){
+                filterCityAndDates(props.filterCity, formatDate(props.filterDates[0]), formatDate(props.filterDates[1]))
             }
             
 
         }, [props.filterCity, props.filterCategory, props.filterDates, products]
     )
+
+    const formatDate = (date) => {
+        return [
+            date.getFullYear(),
+            ((date.getMonth() + 1).toString().padStart(2, '0')),
+            (date.getDate().toString().padStart(2, '0')),          
+        ].join('-'); 
+    }
 
     return(
         <div className="card-list-container">
