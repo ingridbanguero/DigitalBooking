@@ -9,6 +9,8 @@ const AdminForm = (props) => {
     const [selectCategory, setSelectCategory] = useState({});
     const [openCity, setOpenCity] = useState(false);
     const [openCategory, setOpenCategory] = useState(false);
+    const [loadCities, setLoadCities] = useState(false);
+    const [loadCategories, setLoadCategories] = useState(false);
 
     // Obtener categorias
     useEffect(
@@ -16,7 +18,10 @@ const AdminForm = (props) => {
             try{
                 fetch(`${baseUrl}/categorias`)
                 .then(response => response.json())
-                .then(data => setCategories(data))
+                .then(data => {
+                    setCategories(data);
+                    setLoadCategories(true);
+                })
             }catch(e){
                 console.log(e);
             }
@@ -28,12 +33,22 @@ const AdminForm = (props) => {
             try{
                 fetch(`${baseUrl}/ciudades`)
                 .then(response => response.json())
-                .then(data => setCiudades(data))
+                .then(data => {
+                    setCiudades(data);
+                    setLoadCities(true);
+                })
             }catch(e){
                 console.log(e);
             }
         }, []
     )
+
+    useEffect(
+        () => {
+            props.onLoadCities(loadCities);
+            props.onLoadCategories(loadCategories);
+        }, [props, loadCities, loadCategories]
+    ) 
 
     const handleSelectNombre = (e) => {
         props.onSelectNombre(e.target.value);

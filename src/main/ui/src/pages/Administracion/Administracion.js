@@ -1,5 +1,5 @@
 import "./Administracion.scss";
-import { useState, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import Body from "../../components/Body/Body";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
@@ -12,6 +12,7 @@ import baseUrl from "../../helpers/api";
 import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router";
 import Swal from 'sweetalert2';
+import Loader from "../../components/Loader/Loader";
 
 
 const Administracion = () => {
@@ -35,6 +36,21 @@ const Administracion = () => {
     const [errorAtributos, setErrorAtributos] = useState("");
     const [errorInfo, setErrorInfo] = useState("");
 
+    // Load fetch data
+    const [showloader, setShowLoader] = useState(true);
+    const [loadCities, setLoadCities] = useState(false);
+    const [loadCategories, setLoadCategories] = useState(false);
+    const [loadAttributes, setLoadAttributes] = useState(false);
+
+    useEffect(
+        () => {
+            if(loadAttributes && loadCities && loadCategories){
+                setShowLoader(false);
+            } else{
+                setShowLoader(true);
+            }
+        }, [loadCities, loadCategories, loadAttributes]
+    )
 
     const createProduct = (e) => {
         e.preventDefault();
@@ -42,6 +58,7 @@ const Administracion = () => {
         const misPoliticas = validarPoliticas();
         const misAtributos = validarAtributos();
         const misInfo = validarInfo();
+
 
         // Enviar datos
         if(user.auth){
@@ -64,6 +81,7 @@ const Administracion = () => {
             }
             
             if(misImagenes && misPoliticas && misAtributos && misInfo){
+                setShowLoader(true);
                 fetch(`${baseUrl}/productos`, {
                     method: "POST",
                     body: JSON.stringify(producto),
@@ -74,6 +92,7 @@ const Administracion = () => {
                 })
                 .then(response => {
                     if (!response.ok) {
+                        setShowLoader(false);
                         Swal.fire({
                             title: 'Error',
                             text: 'No ha sido posible crear el producto',
@@ -86,6 +105,7 @@ const Administracion = () => {
                     return response.json();
                 })
                 .then(data => {
+                    setShowLoader(false);
                     navigate("/producto-exitoso");
                 })
             }
@@ -137,6 +157,9 @@ const Administracion = () => {
 
     return(
         <section className="administracion">
+            {
+                showloader && <Loader/>
+            }
             <Navbar/>
                 <Body>
                     <ProductTitle nombre="Administración" categoria="admin"/>
@@ -144,6 +167,8 @@ const Administracion = () => {
                         <h1>Crear propiedad</h1>
                         <form>
                             <AdminForm 
+                                onLoadCities={(load) => setLoadCities(load)}
+                                onLoadCategories={(load) => setLoadCategories(load)}
                                 onSelectNombre={nombre => setNombre(nombre)} 
                                 onSelectCiudad={ciudad => setCiudad(ciudad)}
                                 onSelectDireccion={direccion => setDireccion(direccion)}
@@ -152,6 +177,7 @@ const Administracion = () => {
                                 errorInfo={errorInfo}
                             />
                             <AdminAttributes
+                                onLoadAttributes={(load) => setLoadAttributes(load)}
                                 onSelectAtributos={atributos => {
                                     let atributosHelper = [];
                                     atributos.forEach(atributo => atributosHelper.push({id: atributo}))

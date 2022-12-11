@@ -2,10 +2,10 @@ import './CardCategoryContainer.scss';
 import { useEffect, useState } from 'react';
 import CardCategory from "../CardCategory/CardCategory";
 import baseUrl from '../../helpers/api';
-// import Categorias from "../../helpers/categorias.json";
 
 const CardCategoryContainer = (props) => { 
     const [categorias, setCategorias] = useState([]);
+    const [loadCategories, setLoadCategories] = useState(false);
 
     // Traer categorias
     useEffect(
@@ -13,12 +13,21 @@ const CardCategoryContainer = (props) => {
             try{
                 fetch(`${baseUrl}/categorias`)
                 .then(response => response.json())
-                .then(data => setCategorias(data))
+                .then(data =>{
+                    setCategorias(data);
+                    setLoadCategories(true);
+                } )
             }catch(e){
                 console.log(e);
             }
-        }, []
+        }, [props]
     )
+
+    useEffect(
+        () => {
+            props.onLoadCategories(loadCategories);
+        }, [props, loadCategories]
+    ) 
 
     const handleSelectCategory = (categoryId) => {
         props.onSelectCategory(categoryId);

@@ -8,6 +8,7 @@ import { UserContext } from "../../context/UserContext";
 const CardListContainer = (props) => { 
     const [products, setProducts] = useState([]);
     const [filterProducts, setFilterProducts] = useState([]);
+    const [loadCards, setLoadCards] = useState(false);
     const { user } = useContext(UserContext);
 
     // Traer todos los productos 
@@ -19,15 +20,22 @@ const CardListContainer = (props) => {
                 .then(elements => {
                     if(!user.auth){
                         elements = elements.sort(() => Math.random() - 0.5); // Aleatorio
+                    }else {
+                        elements = elements.sort((a, b) => a.id - b.id);
                     }
                     setProducts(elements);
-                    setFilterProducts(elements); 
+                    setFilterProducts(elements);
+                    setLoadCards(true);
                 })
             } catch(e){
                 console.log(e);
             }
         }, [user.auth]
     )
+
+    useEffect(() => {
+        props.onLoadCards(loadCards);
+    }, [props, loadCards])
 
     useEffect(
         () => {
@@ -46,6 +54,7 @@ const CardListContainer = (props) => {
                         } else {
                             setFilterProducts(data);
                         }
+                        setLoadCards(true);
                     })
                 } catch(e){
                     console.log(e);
@@ -61,6 +70,7 @@ const CardListContainer = (props) => {
                     } else {
                         setFilterProducts(data);
                     }
+                    setLoadCards(true);
                 })
             }
 
@@ -73,6 +83,7 @@ const CardListContainer = (props) => {
                     } else {
                         setFilterProducts(data);
                     }
+                    setLoadCards(true);
                 })
             }
             
@@ -83,20 +94,21 @@ const CardListContainer = (props) => {
 
             // Al seleccionar solo ciudad
             if(props.filterCity > 0 && props.filterDates.length === 0){
+                setLoadCards(false);
                 filterCity();
             }
 
             // Al seleccionar solo fecha
             if(props.filterDates.length > 0 && props.filterCity === 0){
+                setLoadCards(false);
                 filterDates(formatDate(props.filterDates[0]), formatDate(props.filterDates[1]))
             }
 
             // Al seleccionar fecha & ciudad
             if(props.filterDates.length > 0 && props.filterCity > 0){
+                setLoadCards(false);
                 filterCityAndDates(props.filterCity, formatDate(props.filterDates[0]), formatDate(props.filterDates[1]))
             }
-            
-
         }, [props.filterCity, props.filterCategory, props.filterDates, products]
     )
 
