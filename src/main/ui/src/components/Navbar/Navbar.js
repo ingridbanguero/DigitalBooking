@@ -16,14 +16,21 @@ const Navbar = () => {
             case "/login":
                 return <li><Link to="/register"><h3>Crear cuenta</h3></Link></li>;
             default:
-                return <><li><Link to="/register"><h3>Crear cuenta</h3></Link></li><li><Link to="/login"><h3>Iniciar Sesión</h3></Link></li></>;
+                return <>
+                <li><Link to="/register"><h3>Crear cuenta</h3></Link></li>
+                <li><Link to="/login"><h3>Iniciar Sesión</h3></Link></li>
+                </>;
         }
     }
 
     const menuLogin = (
         user.auth ? 
         <ul className='menu-login'>
-            <li>
+            {
+                user.rol.id === 1 &&
+                <li className='button-admin desktop'><Link to="/administracion"><h3>Administración</h3></Link></li>
+            }
+            <li className='login-name'>
                 <span className="login-letter"><p>{user.nombre.substr(0,1)}{user.apellido.substr(0,1)}</p></span>
                 <div>
                     <span className="login-close" onClick={logout}></span>
@@ -31,10 +38,14 @@ const Navbar = () => {
                     <p className='text1'>{user.nombre} {user.apellido}</p>
                 </div>
             </li>
+            {
+                user.rol.id === 1 &&
+                <li className='button-admin mobile'><Link to="/administracion"><h3>Administración</h3></Link></li>
+            }
         </ul> : 
         <ul className='menu-logout'>
             <li><h2>MENÚ</h2></li>
-            {menuOptions()}         
+            {menuOptions()}
         </ul>
     )
     return(

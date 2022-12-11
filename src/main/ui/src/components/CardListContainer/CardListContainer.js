@@ -8,6 +8,7 @@ import { UserContext } from "../../context/UserContext";
 const CardListContainer = (props) => { 
     const [products, setProducts] = useState([]);
     const [filterProducts, setFilterProducts] = useState([]);
+    const [loadCards, setLoadCards] = useState(false);
     const { user } = useContext(UserContext);
 
     // Traer todos los productos 
@@ -19,35 +20,22 @@ const CardListContainer = (props) => {
                 .then(elements => {
                     if(!user.auth){
                         elements = elements.sort(() => Math.random() - 0.5); // Aleatorio
+                    }else {
+                        elements = elements.sort((a, b) => a.id - b.id);
                     }
-                    fetch(`${baseUrl}/reservas`)
-                    .then(response => response.json())
-                    .then(reservas => {
-                        reservas.forEach(reserva => {
-                            elements.forEach(product => {
-                                if(reserva.producto.id === product.id){
-                                    let datesToDisabled = []
-                                    let startDate = reserva.fechaInicio.split('-');
-                                    startDate = new Date(startDate[0], startDate[1] - 1, startDate[2]);
-                                    let endDate = reserva.fechaFinal.split('-');
-                                    endDate = new Date(endDate[0], endDate[1] - 1, endDate[2]);
-                                    while(endDate.getTime() >= startDate.getTime()){
-                                        startDate.setDate(startDate.getDate() + 1);
-                                        datesToDisabled.push(Date.parse(startDate));
-                                    }
-                                    product.disabledFechas = [...datesToDisabled];
-                                }
-                            })
-                        })
-                        setProducts(elements);
-                        setFilterProducts(elements); 
-                    })    
+                    setProducts(elements);
+                    setFilterProducts(elements);
+                    setLoadCards(true);
                 })
             } catch(e){
                 console.log(e);
             }
         }, [user.auth]
     )
+
+    useEffect(() => {
+        props.onLoadCards(loadCards);
+    }, [props, loadCards])
 
     useEffect(
         () => {
@@ -66,21 +54,37 @@ const CardListContainer = (props) => {
                         } else {
                             setFilterProducts(data);
                         }
+                        setLoadCards(true);
                     })
                 } catch(e){
                     console.log(e);
                 }
             }
 
-            const filterDates = () => {
-                let productsFilterDates = products.filter((product) => {
-                    if(product.disabledFechas){
-                        return !product.disabledFechas.includes(Date.parse(props.filterDates[0])) && !product.disabledFechas.includes(Date.parse(props.filterDates[1]))
-                    }else {
-                        return true;
+            const filterDates = (startDate, endDate) => {
+                fetch(`${baseUrl}/productos/fechas?fechaInicial=${startDate}&fechaFinal=${endDate}`)
+                .then(response => response.json())
+                .then(data => {
+                    if(props.filterCategory > 0){
+                        filterCategory(data);
+                    } else {
+                        setFilterProducts(data);
                     }
+                    setLoadCards(true);
                 })
-                setFilterProducts(productsFilterDates);
+            }
+
+            const filterCityAndDates = (idCiudad, startDate, endDate) => {
+                fetch(`${baseUrl}/productos/ciudadyfechas?idCiudad=${idCiudad}&fechaInicial=${startDate}&fechaFinal=${endDate}`)
+                .then(response => response.json())
+                .then(data => {
+                    if(props.filterCategory > 0){
+                        filterCategory(data);
+                    } else {
+                        setFilterProducts(data);
+                    }
+                    setLoadCards(true);
+                })
             }
             
             // Si solo se selecciona categoria
@@ -88,19 +92,33 @@ const CardListContainer = (props) => {
                 filterCategory(products);
             }
 
-            // Al seleccionar ciudad
+            // Al seleccionar solo ciudad
             if(props.filterCity > 0 && props.filterDates.length === 0){
+                setLoadCards(false);
                 filterCity();
             }
 
-            // Al seleccionar fecha
-            if(props.filterDates.length > 0){
-                filterDates();
+            // Al seleccionar solo fecha
+            if(props.filterDates.length > 0 && props.filterCity === 0){
+                setLoadCards(false);
+                filterDates(formatDate(props.filterDates[0]), formatDate(props.filterDates[1]))
             }
-            
 
+            // Al seleccionar fecha & ciudad
+            if(props.filterDates.length > 0 && props.filterCity > 0){
+                setLoadCards(false);
+                filterCityAndDates(props.filterCity, formatDate(props.filterDates[0]), formatDate(props.filterDates[1]))
+            }
         }, [props.filterCity, props.filterCategory, props.filterDates, products]
     )
+
+    const formatDate = (date) => {
+        return [
+            date.getFullYear(),
+            ((date.getMonth() + 1).toString().padStart(2, '0')),
+            (date.getDate().toString().padStart(2, '0')),          
+        ].join('-'); 
+    }
 
     return(
         <div className="card-list-container">

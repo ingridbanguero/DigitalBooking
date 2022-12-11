@@ -27,7 +27,7 @@ public class Politica {
 
   private String normas;
 
-  @JsonProperty("salud-seguridad")
+  @JsonProperty("saludSeguridad")
   private String saludSeguridad;
 
   private String cancelacion;

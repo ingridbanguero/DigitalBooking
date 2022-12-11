@@ -5,6 +5,7 @@ import './AdminAttributes.scss';
 const AdminAttributes = (props) => {
     const [features, setFeatures] = useState([]);
     const [checkFeatures, setCheckFeatures] = useState([]);
+    const [loadAttributes, setLoadAttributes] = useState(false);
 
     // Obtener caracteristicas
     useEffect(
@@ -12,12 +13,22 @@ const AdminAttributes = (props) => {
             try{
                 fetch(`${baseUrl}/caracteristicas`)
                 .then(response => response.json())
-                .then(data => setFeatures(data))
+                .then(data => {
+                    setFeatures(data);
+                    setLoadAttributes(true);
+                })
             }catch(e){
                 console.log(e);
             }
         }, []
     )
+
+    useEffect(
+        () => {
+            props.onLoadAttributes(loadAttributes);
+        }, [props, loadAttributes]
+    ) 
+
     const handleChange = (e) => {
         if(e.target.checked){
             setCheckFeatures([...checkFeatures, Number(e.target.name) ]);
@@ -26,7 +37,7 @@ const AdminAttributes = (props) => {
             setCheckFeatures(checkFeatures.filter(item => item !== Number(e.target.name)))
             props.onSelectAtributos(checkFeatures.filter(item => item !== Number(e.target.name)))
         }
-    }
+    }   
 
     return(
         <div className="admin-attributes">
@@ -44,6 +55,12 @@ const AdminAttributes = (props) => {
                     })
                 }
             </div>
+            {
+                props.errorAtributos &&
+                <div className="error">
+                    <p>{props.errorAtributos}</p>
+                </div>
+            }
         </div>
     )
 }

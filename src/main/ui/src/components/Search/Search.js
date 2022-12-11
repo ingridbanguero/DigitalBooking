@@ -11,6 +11,7 @@ const Search = (props) => {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [ciudades, setCiudades] = useState([]);
+    const [loadCities, setLoadCities] = useState(false);
 
     const handleSelectDate = (dateRange) => {
         props.onSelectDates(dateRange);
@@ -22,16 +23,20 @@ const Search = (props) => {
     // Traer ciudades
     useEffect(
         () => {
-            try{
-                fetch(`${baseUrl}/ciudades`)
-                .then(response => response.json())
-                .then(data => setCiudades(data))
-            }catch(e){
-                console.log(e);
-            }
-        }, []
+            fetch(`${baseUrl}/ciudades`)
+            .then(response => response.json())
+            .then(data => {
+                setCiudades(data);
+                setLoadCities(true);
+            })
+        }, [props]
     )
-    
+
+    useEffect(
+        () => {
+            props.onLoadCities(loadCities);
+        }, [props, loadCities]
+    ) 
 
     return(
         <div className="search">

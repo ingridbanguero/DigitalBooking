@@ -56,7 +56,7 @@ const Calendar = (props) => {
                 selectsDisabledDaysInRange={false}
                 shouldCloseOnSelect={false}
                 useWeekdaysShort={true}
-                excludeDates={props.disabledDates}
+                excludeDateIntervals={props.disabledDates}
                 formatWeekDay={nameOfDay => nameOfDay.substr(0,1).toUpperCase()}
             >
                 <button className='button1 button-calendar' onClick={() => props.onSelectDate(dateRange)}>Aplicar</button>

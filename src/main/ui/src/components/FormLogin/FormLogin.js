@@ -7,7 +7,7 @@ import baseUrl from '../../helpers/api';
 import './FormLogin.scss';
 
 
-const FormLogin = () => { 
+const FormLogin = (props) => { 
     const [errorForm, setErrorForm] = useState("");
     const { login } = useContext(UserContext);
     const navigate = useNavigate();
@@ -23,7 +23,7 @@ const FormLogin = () => {
     )
    
     const onSubmit = evento => {
-        console.log(evento);
+        props.onSendLogin(true);
         // Obtener token y datos del usuario
         fetch(`${baseUrl}/usuarios/auth`, {
             method: "POST",
@@ -32,6 +32,7 @@ const FormLogin = () => {
         })
         .then(response => {
             if (!response.ok) {
+                props.onSendLogin(false);
                 setErrorForm("Lamentablemente no ha podido iniciar sesión. Por favor intente más tarde");
                 throw new Error("HTTP status " + response.status);
             }
@@ -44,9 +45,9 @@ const FormLogin = () => {
                 apellido: data.usuario.apellido,
                 email: data.usuario.email,
                 ciudad: data.usuario.ciudad,
-                token: data.jwt
+                token: data.jwt,
+                rol: data.usuario.rol
             }
-            console.log(data);
             // Loguear usuario
             login(data);
 
@@ -54,6 +55,9 @@ const FormLogin = () => {
             window.localStorage.setItem(
                 'loggedDigitalAppUser', JSON.stringify(data)
             )
+
+            // Ocultar loader
+            props.onSendLogin(false);
 
             // Redireccionar
             if(searchParams.get('reserva')){

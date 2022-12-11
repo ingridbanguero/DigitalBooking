@@ -53,11 +53,11 @@
             .error{
                 display: flex;
                 justify-content: flex-end;
-                padding-top: 0;
+                padding-top: 10px;
                 p{
                     color: red;
                     align-self: flex-end;
-                    padding: 0;
+                    padding: 0px;
                 }
             }
             .create {
