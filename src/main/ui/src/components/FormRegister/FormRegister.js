@@ -6,7 +6,7 @@ import baseUrl from '../../helpers/api';
 import './FormRegister.scss';
 import Swal from 'sweetalert2';
 
-const FormRegister = () => { 
+const FormRegister = (props) => { 
     const [errorForm, setErrorForm] = useState("");
     const { register, formState: { errors }, handleSubmit, watch } = useForm();
     const navigate = useNavigate();
@@ -14,6 +14,7 @@ const FormRegister = () => {
     contrasenna.current = watch("contrasenna", "");
 
     const onSubmit = evento => {
+        props.onSendRegister(true);
         const {contrasenna_repeat, ...dataUser} = evento;
         dataUser.rol = {id: 2};
 
@@ -25,12 +26,14 @@ const FormRegister = () => {
         })
         .then(response => {
             if (!response.ok) {
+                props.onSendRegister(false);
                 setErrorForm("Lamentablemente no ha podido registrarse. Por favor intente más tarde");
                 throw new Error("HTTP status " + response.status);
             }
             return response.json();
         })
         .then(data => {
+            props.onSendRegister(false);
             Swal.fire({
                 title: 'Usuario creado',
                 text: 'Su usuario ha sido creado, ya puede iniciar sesión.',
