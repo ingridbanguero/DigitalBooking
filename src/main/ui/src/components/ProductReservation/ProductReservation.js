@@ -6,10 +6,11 @@ import { Link } from "react-router-dom";
 import baseUrl from "../../helpers/api";
 import { UserContext } from "../../context/UserContext";
 
-const ProductReservation = () => {
+const ProductReservation = (props) => {
     const { user } = useContext(UserContext);
     let { id } = useParams();
     const [disabledDates, setDisabledDates] = useState([]);
+    const [loadDisabledDates, setLoadDisabledDates] = useState(false);
 
     useEffect(
         () => {
@@ -27,12 +28,19 @@ const ProductReservation = () => {
                         })
                     })
                     setDisabledDates(datesToDisabled);
+                    setLoadDisabledDates(true);
                 })
             } catch(e){
                 console.log(e);
             }
         }, [id]
     )
+
+    useEffect(
+        () => {
+            props.onLoadDisabledDates(loadDisabledDates);
+        }, [props, loadDisabledDates]
+    ) 
 
     const createDate = (strDate) => {
         let date = strDate.split('-');

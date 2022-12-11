@@ -3,6 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from "react-router";
 import { UserContext } from "../../context/UserContext";
 import baseUrl from "../../helpers/api";
+import Loader from "../../components/Loader/Loader";
 import Body from "../../components/Body/Body";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
@@ -24,6 +25,11 @@ const Reserva = () => {
     const [hour, setHour] = useState("");
     const [errorDate, setErrorDate] = useState(false);
     const [errorHour, setErrorHour] = useState(false);
+
+    // Loader
+    const [showloader, setShowLoader] = useState(true);
+    const [loadProduct, setLoadProduct] = useState(false);
+    const [loadDisabledDates, setLoadDisabledDates] = useState(false);
 
     const handleStartDate = (startDate) => {
         setStartDate(startDate);
@@ -47,6 +53,7 @@ const Reserva = () => {
         if(user.auth){
             validateFields();
             if(hour && startDate && endDate){
+                setShowLoader(true);
                 const reservaData = {
                     hora: hour,
                     fechaInicio: formatDate(startDate),
@@ -68,6 +75,7 @@ const Reserva = () => {
                 })
                 .then(response => {
                     if (!response.ok) {
+                        setShowLoader(false);
                         Swal.fire({
                             title: 'Error',
                             text: 'No ha sido posible realizar su reserva',
@@ -80,6 +88,7 @@ const Reserva = () => {
                     return response.json();
                 })
                 .then(data => {
+                    setShowLoader(false);
                     navigate("/reserva-exitosa");
                 })
             }
@@ -100,31 +109,47 @@ const Reserva = () => {
             try{
                 fetch(`${baseUrl}/productos/${id}`)
                 .then(response => response.json())
-                .then(data => setProduct(data))
+                .then(data =>{
+                    setProduct(data)
+                    setLoadProduct(true);
+                })
             }catch(e){
                 console.log(e);
             }
         }, [id]
     )
 
+    useEffect(
+        () => {
+            if(loadDisabledDates && loadProduct){
+                setShowLoader(false);
+            } else{
+                setShowLoader(true);
+            }
+        }, [loadDisabledDates, loadProduct]
+    )
+
     return(
         <section className="reserva">
+            {
+                showloader && <Loader/>
+            }
             <Navbar/>
-                { product ? 
+                { product &&
                     <Body>
                         <ProductTitle nombre={product.nombre} categoria={product.categoria}/>
                             <section className="reserva-contents">
                                 <div className="reserva-content-data">
                                     <ReservaForm user={user}/>
-                                    <ReservaCalendar onSelectStartDate={handleStartDate} onSelectEndDate={handleEndDate}/>
+                                    <ReservaCalendar onLoadDisabledDates={(load) => setLoadDisabledDates(load)} onSelectStartDate={handleStartDate} onSelectEndDate={handleEndDate}/>
                                     <ReservaSchedule hour={hour} onSelectHour={handleHour}/>
                                 </div>
                                 <div className="reserva-content-details">
                                     <ReservaDetails details={product} startDate={startDate} endDate={endDate} errorHour={errorHour}  errorDate={errorDate} onSubmitReserva={handleSubmitReserva}/>
                                 </div>
                             </section>
-                        <ProductPolicies/>
-                    </Body> : <></>
+                        <ProductPolicies politica={product.politica}/>
+                    </Body>
                 }
             <Footer/>
         </section> 
