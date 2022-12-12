@@ -7,6 +7,7 @@ import Reserva from './pages/Reserva/Reserva';
 import ProductoExitoso from './pages/ProductoExitoso/ProductoExitoso';
 import ReservaExitosa from './pages/ReservaExitosa/ReservaExitosa';
 import Administracion from './pages/Administracion/Administracion';
+import Error from './pages/Error/Error';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { UserProvider } from './context/UserContext';
 
@@ -25,7 +26,7 @@ function App() {
             <Route path='/reserva-exitosa' element={<ReservaExitosa/>} />
             <Route path='/producto-exitoso' element={<ProductoExitoso/>} />
             <Route path='/administracion' element={<Administracion/>} />
-            <Route path="*" element={<p>Error 404</p>}/>
+            <Route path="*" element={<Error/>}/>
           </Routes>
         </div>
       </BrowserRouter>
