@@ -5,6 +5,14 @@
         width: 100%;
         margin: 0 auto;
         padding: 10px;
+        .without-results{
+            height: 100px;
+            display: flex;
+            align-items: center;
+            p{
+                color: var(--white);
+            }
+        }
     }
     h2 {
         color: var(--white);
@@ -16,6 +24,14 @@
         h2 {
             color: var(--black);
             padding-bottom: 0px;
+        }
+        .content{
+            .without-results{
+                height: 150px;
+                p{
+                    color: var(--grey);
+                }
+            }
         }
         .content > div {
             width: 100%;
@@ -30,6 +46,14 @@
         h2 {
             color: var(--black);
             padding-left: 28px;
+        }
+        .content{
+            .without-results{
+                height: 250px;
+                p{
+                    color: var(--grey);
+                }
+            }
         }
     }
 }
