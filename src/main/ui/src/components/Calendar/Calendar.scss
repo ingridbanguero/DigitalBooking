@@ -53,6 +53,9 @@
             background-color: var(--primary-color);
             border-radius: 60%;
         }
+        .react-datepicker__day--in-selecting-range{
+            background-color: var(--primary-color);
+        }
     
         .react-datepicker__week {
             padding: 2px 0px;

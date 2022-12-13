@@ -134,12 +134,22 @@
             }
         }
     }
-    @media screen and (min-width: 768px){
+    @media screen and (min-width: 1024px){
         h1 {
             font-size: 36px;
             color: var(--white);
             text-align: center;
             padding: 28px 11px 14px 11px;
+        }
+        form {
+            .option-city{
+                &:hover{
+                    color: var(--primary-color);
+                    p {
+                        color: var(--primary-color);
+                    }
+                }
+            }
         }
     }
 }

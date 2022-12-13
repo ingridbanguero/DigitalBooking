@@ -173,6 +173,9 @@
                         padding-right: 0;
                         a h3{
                             padding: 20px 10px 0px 0px;
+                            &:hover{
+                                color: var(--primary-color);
+                            }
                         }
                         &.desktop{
                             display: none;
