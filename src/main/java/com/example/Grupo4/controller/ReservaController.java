@@ -28,14 +28,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReservaController {
 
   private final ReservaService reservaService;
+ 
 
-  private final ObjectMapper mapper;
-
-  public ReservaController(ReservaService reservaService, ObjectMapper mapper) {
-    this.reservaService = reservaService;
-    this.mapper = mapper;
-    mapper.registerModule(new Jdk8Module());
-    mapper.registerModule(new JavaTimeModule());
+  public ReservaController(ReservaService reservaService) {
+    this.reservaService = reservaService;      
   }
 
   @PostMapping
@@ -45,6 +41,9 @@ public class ReservaController {
 
   @GetMapping("/{id}")
   public ResponseEntity<ReservaDTO> consultar(@PathVariable Integer id) {
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.registerModule(new Jdk8Module());
+    mapper.registerModule(new JavaTimeModule());
     if (reservaService.consultarReserva(id).isEmpty()) {
       throw new ApiException("reservations_error", "La reserva no existe", 404);
     } else {
@@ -54,7 +53,7 @@ public class ReservaController {
 
   @GetMapping
   public ResponseEntity<ReservaDTO[]> consultarTodas() {
-    return ResponseEntity.ok(mapper.convertValue(reservaService.consultarTodasLasReservaes(), ReservaDTO[].class));
+    return ResponseEntity.ok(reservaService.consultarTodasLasReservaes());
   }
 
   @PutMapping
@@ -80,11 +79,11 @@ public class ReservaController {
 
   @GetMapping("/producto")
   public ResponseEntity<ReservaDTO[]> filtrarPorProducto(@RequestParam Integer id) {
-    return ResponseEntity.ok(mapper.convertValue(reservaService.filtrarReservaPorProducto(id), ReservaDTO[].class));
+    return ResponseEntity.ok(reservaService.filtrarReservaPorProducto(id));
   }
 
   @GetMapping("/usuario")
   public ResponseEntity<ReservaDTO[]> filtrarPorUsuario(@RequestParam Integer id) {
-    return ResponseEntity.ok(mapper.convertValue(reservaService.filtrarReservasPorUsuario(id), ReservaDTO[].class));
+    return ResponseEntity.ok(reservaService.filtrarReservasPorUsuario(id));
   }
 }

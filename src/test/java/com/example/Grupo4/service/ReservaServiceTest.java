@@ -9,13 +9,18 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.Grupo4.model.Producto;
 import com.example.Grupo4.model.Reserva;
 import com.example.Grupo4.model.Usuario;
 import com.example.Grupo4.repository.IReservaRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 class ReservaServiceTest {
+
+    @Autowired
+    private ObjectMapper mapper;
 
     @Test
     void testConsultarReserva() {
@@ -35,7 +40,7 @@ class ReservaServiceTest {
     when(repositoryMock.findById(1)).thenReturn(Optional.of(reserva));
 
     // Crea una instancia del service usando el mock del repository
-    ReservaService service = new ReservaService(repositoryMock);
+    ReservaService service = new ReservaService(repositoryMock, mapper);
 
     // Llama al método a probar y guarda el resultado en una variable
     Optional<Reserva> resultado = service.consultarReserva(1);
