@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 
 const FormRegister = (props) => { 
     const [errorForm, setErrorForm] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
     const { register, formState: { errors }, handleSubmit, watch } = useForm();
     const navigate = useNavigate();
     const contrasenna = useRef({});
@@ -61,7 +62,7 @@ const FormRegister = (props) => {
             }
              <h1>Crear Cuenta</h1>  
                 <form noValidate>
-                    <div>
+                    <div className="name-lastname">
                         <div>
                             <label>Nombre</label>   
                             <input type="text" name="nombre" autoComplete="off"{...register("nombre", { 
@@ -70,41 +71,54 @@ const FormRegister = (props) => {
                             <ErrorMessage errors={errors} name="nombre" render={({ message }) => <p className="error-message">{message}</p>}/>
                         </div>
                         <div>
-                            <label>Apellido</label>   
+                            <label>Apellido</label>
                             <input type="text" name="apellido" required formNoValidate autoComplete="off" {...register("apellido", { 
                         required: "Este campo es requerido."})}/>   
                             <ErrorMessage errors={errors} name="apellido" render={({ message }) => <p className="error-message">{message}</p>}/>
                         </div>
                     </div>
-
-                    <label>Correo electrónico</label>   
-                    <input type="email" name="email" required autoComplete="off"{...register("email", { 
-                        required: "Este campo es requerido.", 
-                        pattern: {
-                            value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-                            message: "Formato de email inválido."
-                        }
-                        })}/>   
+                    <div>
+                        <label>Correo electrónico</label>   
+                        <input type="email" name="email" required autoComplete="off"{...register("email", { 
+                            required: "Este campo es requerido.", 
+                            pattern: {
+                                value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
+                                message: "Formato de email inválido."
+                            }
+                        })}/>  
+                    </div>
+                     
                     <ErrorMessage errors={errors} name="email" render={({ message }) => <p className="error-message">{message}</p>}/>
                     
-                    <label>Contraseña</label> 
-                    <input type="password" name="contrasenna" required autoComplete="off"{...register("contrasenna", { 
-                        required: "Este campo es requerido.", 
-                        minLength: {
-                            value: 7,
-                            message: "La contraseña debe contener más de 6 caracteres"
-                          }
-                        })}
-                        />   
+                    <div>
+                        <label>Contraseña</label> 
+                        <span onClick={() => { setShowPassword(!showPassword) }}>
+                        {
+                            showPassword ? 
+                            <i class="fa-solid fa-eye-slash"></i> :
+                            <i class="fa-solid fa-eye"></i> 
+                        }
+                        </span>
+                        <input type={showPassword ? "text" : "password"} name="contrasenna" required autoComplete="off"{...register("contrasenna", { 
+                            required: "Este campo es requerido.", 
+                            minLength: {
+                                value: 7,
+                                message: "La contraseña debe contener más de 6 caracteres"
+                            }
+                            })}
+                            />   
+                    </div>
                     <ErrorMessage errors={errors} name="contrasenna" render={({ message }) => <p className="error-message">{message}</p>}/>
-
-                    <label>Confirmar contraseña</label>   
-                    <input type="password" name="contrasenna_repeat" required autoComplete="off"{...register("contrasenna_repeat", { 
-                        required: "Este campo es requerido.", 
-                        validate: value =>
-                            value === contrasenna.current || "Las contraseñas no coinciden"
-                        })}
-                    />   
+                    
+                    <div>
+                        <label>Confirmar contraseña</label>   
+                        <input type="password" name="contrasenna_repeat" required autoComplete="off"{...register("contrasenna_repeat", { 
+                            required: "Este campo es requerido.", 
+                            validate: value =>
+                                value === contrasenna.current || "Las contraseñas no coinciden"
+                            })}
+                        />  
+                    </div>
                     <ErrorMessage errors={errors} name="contrasenna_repeat" render={({ message }) => <p className="error-message">{message}</p>}/> 
 
                     <button type="submit">Crear cuenta</button>   

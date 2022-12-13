@@ -43,6 +43,17 @@
             width: 100%;
             > div {
                 width: 100%;
+                position: relative;
+                span{
+                    cursor: pointer;
+                    position: absolute;
+                    right: 8px;
+                    bottom: 8px;
+                    i{
+                        font-size: 20px;
+                        color: #607D8B;
+                    }
+                }
             }
 
             label{
@@ -107,7 +118,7 @@
                 margin-bottom: 12px;
             }
             form {
-                > div {
+                .name-lastname {
                     display: flex;
                     width: 100%;
                     justify-content: space-between;

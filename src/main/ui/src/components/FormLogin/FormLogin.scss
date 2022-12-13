@@ -42,9 +42,24 @@
             flex-direction: column;
             align-items: flex-start;
             width: 100%;
+            > div {
+                width: 100%;
+                position: relative;
+                span{
+                    cursor: pointer;
+                    position: absolute;
+                    right: 8px;
+                    bottom: 8px;
+                    i{
+                        font-size: 20px;
+                        color: #607D8B;
+                    }
+                }
+            }
             label{
                 font-size: 12px;
-                margin: 20px 0px 10px 0px;
+                display: inline-block;
+                margin: 20px 0px 8px 0px;
             }
 
             input{
