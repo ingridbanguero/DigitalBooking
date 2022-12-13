@@ -1,6 +1,7 @@
 package com.example.Grupo4.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.example.Grupo4.exception.ApiException;
 import com.example.Grupo4.model.Caracteristica;
 import com.example.Grupo4.model.Categoria;
 import com.example.Grupo4.model.Ciudad;
@@ -51,4 +53,29 @@ class ProductoControllerTest {
       assertEquals(HttpStatus.OK, response.getStatusCode());
       assertEquals(producto, response.getBody());
     }
+
+    @Test
+    void testConsultarProductoInexistente() {
+        //Crea un mock del servicio
+        ProductoService serviceMock = mock(ProductoService.class);
+
+        //Configura el mock para que devuelva un Optional vacío cuando se llame al método consultarProducto()
+        Optional<Producto> Producto = Optional.empty();
+        when(serviceMock.consultarProducto(1)).thenReturn(Producto);
+
+        //Crea una instancia del controlador asignandole el mock del servicio
+        ProductoController controller = new ProductoController(serviceMock);
+
+        //Ejecuta la prueba
+        try {
+        controller.consultar(1);
+        fail("Se esperaba una excepción");
+        } catch (ApiException e) {
+        // Verifica que la excepción se haya generado correctamente
+        assertEquals("products_error", e.getCode());
+        assertEquals("El producto no existe", e.getDescription());
+        assertEquals(404, e.getStatusCode());
+        }
+    }
+
 }

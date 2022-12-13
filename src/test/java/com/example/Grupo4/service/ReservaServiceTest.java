@@ -9,7 +9,6 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.Grupo4.model.Producto;
 import com.example.Grupo4.model.Reserva;
