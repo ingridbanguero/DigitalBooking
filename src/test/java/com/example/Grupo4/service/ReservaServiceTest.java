@@ -9,7 +9,6 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.Grupo4.model.Producto;
 import com.example.Grupo4.model.Reserva;
@@ -18,9 +17,8 @@ import com.example.Grupo4.repository.IReservaRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 class ReservaServiceTest {
-
-    @Autowired
-    private ObjectMapper mapper;
+    
+    private ObjectMapper mapper = new ObjectMapper();
 
     @Test
     void testConsultarReserva() {
