@@ -13,6 +13,7 @@ const FormLogin = (props) => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const { register, formState: { errors }, handleSubmit } = useForm();
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(
         () => {
@@ -82,6 +83,7 @@ const FormLogin = (props) => {
                 }
                 <h1>Iniciar Sesión</h1>  
                 <form noValidate>
+                    <div>
                     <label>Correo electrónico</label>   
                     <input type="email" name="email" {...register("email", { 
                         required: "Este campo es requerido.", 
@@ -90,18 +92,26 @@ const FormLogin = (props) => {
                             message: "Formato de email inválido."
                         }
                         })}/>   
-
+                    </div>
                     <ErrorMessage errors={errors} name="email" render={({ message }) => <p className="error-message">{message}</p>}/>
-
-                    <label>Contraseña</label>   
-                    <input type="password" name="contrasenna" {...register("contrasenna", { 
-                        required: "Este campo es requerido.", 
-                        minLength: {
-                            value: 7,
-                            message: "La contraseña debe tener más de 6 caracteres"
+                    <div>
+                        <label>Contraseña</label>
+                        <span onClick={() => { setShowPassword(!showPassword) }}>
+                        {
+                            showPassword ? 
+                            <i class="fa-solid fa-eye-slash"></i> :
+                            <i class="fa-solid fa-eye"></i> 
+                             
                         }
+                        </span>
+                        <input type={showPassword ? "text" : "password"} name="contrasenna" {...register("contrasenna", { 
+                            required: "Este campo es requerido.", 
+                            minLength: {
+                                value: 7,
+                                message: "La contraseña debe tener más de 6 caracteres"
+                            }
                         })}/>   
-
+                    </div>
                     <ErrorMessage errors={errors} name="contrasenna" render={({ message }) => <p className="error-message">{message}</p>}/>                    
 
                     <button type="submit">Ingresar</button>   

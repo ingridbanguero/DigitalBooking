@@ -36,8 +36,8 @@ const Search = (props) => {
         () => {
             props.onLoadCities(loadCities);
         }, [props, loadCities]
-    ) 
-
+    )
+    
     return(
         <div className="search">
             <h1>Busca ofertas en hoteles, casas y mucho más</h1>

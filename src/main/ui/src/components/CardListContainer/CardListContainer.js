@@ -9,6 +9,7 @@ const CardListContainer = (props) => {
     const [products, setProducts] = useState([]);
     const [filterProducts, setFilterProducts] = useState([]);
     const [loadCards, setLoadCards] = useState(false);
+    const [withoutResults, setWithoutResults] = useState(false);
     const { user } = useContext(UserContext);
 
     // Traer todos los productos 
@@ -26,6 +27,7 @@ const CardListContainer = (props) => {
                     setProducts(elements);
                     setFilterProducts(elements);
                     setLoadCards(true);
+                    setWithoutResults(true);
                 })
             } catch(e){
                 console.log(e);
@@ -128,7 +130,12 @@ const CardListContainer = (props) => {
                 <div>
                 { filterProducts.map((product, index) => <CardList details={product} key={index}/>) }
                 </div>
-                : <></>}
+                : <div className='without-results'> 
+                    {
+                        withoutResults &&  <p>No hay resultados para su búsqueda.</p>
+                    }
+                    </div>
+                }
             </div>
         </div>
     )

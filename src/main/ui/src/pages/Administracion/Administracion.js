@@ -69,7 +69,7 @@ const Administracion = () => {
                 politica: {
                     normas: normas,
                     cancelacion: cancelacion,
-                    "salud-seguridad": saludSeguridad,
+                    saludSeguridad: saludSeguridad,
                 },
                 categoria: {
                     id: categoria
